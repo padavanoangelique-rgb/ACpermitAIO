@@ -1,4 +1,4 @@
-<!doctype html><html data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#155888"><title>Proper AC Command Center</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet"><style id="appStyle">
+<!doctype html><html data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMUQ0RkQ4Ii8+PGcgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PGxpbmUgeDE9IjUwIiB5MT0iMjAiIHgyPSI1MCIgeTI9IjgwIi8+PGxpbmUgeDE9IjI0IiB5MT0iMzUiIHgyPSI3NiIgeTI9IjY1Ii8+PGxpbmUgeDE9Ijc2IiB5MT0iMzUiIHgyPSIyNCIgeTI9IjY1Ii8+PC9nPjxnIGZpbGw9IiMyMkQzRUUiPjxjaXJjbGUgY3g9IjUwIiBjeT0iMjAiIHI9IjUiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjgwIiByPSI1Ii8+PGNpcmNsZSBjeD0iMjQiIGN5PSIzNSIgcj0iNSIvPjxjaXJjbGUgY3g9Ijc2IiBjeT0iNjUiIHI9IjUiLz48Y2lyY2xlIGN4PSI3NiIgY3k9IjM1IiByPSI1Ii8+PGNpcmNsZSBjeD0iMjQiIGN5PSI2NSIgcj0iNSIvPjwvZz48L3N2Zz4K"><meta name="theme-color" content="#123E91"><title>PermitAIO Air</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet"><style id="appStyle">
   :root{
     --bg:#f4f7fb;
     --surface:#ffffff;
@@ -8,11 +8,11 @@
     --text:#222222;
     --text-muted:#434343;
     --text-faint:#8a8a8a;
-    --accent:#267ECE;
+    --accent:#1D4FD8;
     --accent-strong:#1b5f9e;
     --accent-soft:#e4f1fb;
     --accent-contrast:#ffffff;
-    --gold:#FFC527;
+    --gold:#22D3EE;
     --gold-strong:#e0a80f;
     --orange:#FA9347;
     --success:#1c8a5e;
@@ -39,10 +39,10 @@
       --text-muted:#9fbac7;
       --text-faint:#6e8a97;
       --accent:#4ea3e6;
-      --accent-strong:#FFC527;
+      --accent-strong:#22D3EE;
       --accent-soft:#16344d;
       --accent-contrast:#052033;
-      --gold:#FFC527;
+      --gold:#22D3EE;
       --gold-strong:#e0a80f;
       --orange:#FA9347;
       --success:#3fce93;
@@ -88,7 +88,7 @@
   body{
     background:var(--bg);
     color:var(--text);
-    font-family:'Public Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+    font-family:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,sans-serif;
     font-size:14px;
     line-height:1.45;
     -webkit-font-smoothing:antialiased;
@@ -100,7 +100,7 @@
     text-wrap:balance;
     margin:0;
   }
-  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  .mono{font-family:'Geist Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
   a{color:var(--accent)}
   button{font:inherit}
   input,select,textarea{font:inherit;color:inherit}
@@ -111,7 +111,7 @@
   /* ---------- sidebar ---------- */
   #sidebar{
     width:230px;flex:none;
-    background:linear-gradient(180deg,#267ECE,#155888);
+    background:linear-gradient(180deg,#1D4FD8,#123E91);
     color:#eaf5fb;
     display:flex;flex-direction:column;
     position:sticky;top:0;height:100vh;
@@ -122,7 +122,7 @@
   .brand-logo{width:100%;height:auto;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
   .brand-name{font-family:'Outfit';font-weight:800;font-size:19px;color:#fff;display:flex;align-items:center;gap:9px}
   .brand-mark{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;flex:none}
-  .brand-tag{font-size:10.5px;color:#FFC527;margin-top:8px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+  .brand-tag{font-size:10.5px;color:#22D3EE;margin-top:8px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
   nav.mainnav{flex:1;padding:14px 10px;overflow-y:auto}
   .navitem{
     display:flex;align-items:center;gap:11px;
@@ -134,8 +134,8 @@
   .navitem svg{flex:none;opacity:.85}
   .navitem:hover{background:rgba(255,255,255,.08)}
   .navitem.active{background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.18)}
-  .navitem .count{margin-left:auto;font-size:11px;background:rgba(255,255,255,.16);padding:1px 7px;border-radius:99px;font-family:'IBM Plex Mono'}
-  .navitem.active .count{background:#FFC527;color:#222}
+  .navitem .count{margin-left:auto;font-size:11px;background:rgba(255,255,255,.16);padding:1px 7px;border-radius:99px;font-family:'Geist Mono'}
+  .navitem.active .count{background:#22D3EE;color:#222}
   .sidefoot{padding:12px 16px;border-top:1px solid rgba(255,255,255,.12);font-size:11px;color:#9fc6da}
 
   /* ---------- main ---------- */
@@ -231,7 +231,7 @@
   tbody td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
   tbody tr:hover{background:var(--surface-2)}
   tbody tr:last-child td{border-bottom:none}
-  td.num,th.num{text-align:right;font-family:'IBM Plex Mono';font-variant-numeric:tabular-nums}
+  td.num,th.num{text-align:right;font-family:'Geist Mono';font-variant-numeric:tabular-nums}
   .row-actions{display:flex;gap:6px;justify-content:flex-end}
   .empty-state{padding:38px 20px;text-align:center;color:var(--text-muted)}
   .empty-state .big{font-size:15px;color:var(--text);font-weight:700;margin-bottom:6px;font-family:'Outfit'}
@@ -303,9 +303,9 @@
   .today-title{font-weight:700;font-size:13.5px}
   .today-sub{font-size:12px;color:var(--text-muted)}
   .letter-preview{background:#fdfdfb;color:#1c1c1c;border:1px solid var(--border);border-radius:8px;padding:26px 30px;font-family:Georgia,'Times New Roman',serif;font-size:13.5px;line-height:1.7}
-  .letter-preview .lh-name{font-family:'Outfit';font-weight:800;font-size:18px;color:#267ECE}
+  .letter-preview .lh-name{font-family:'Outfit';font-weight:800;font-size:18px;color:#1D4FD8}
   .letter-preview .lh-tag{font-size:11.5px;color:#4f6d7a;margin-top:2px}
-  .letter-preview hr{border:none;border-top:3px solid #FFC527;margin:12px 0 18px}
+  .letter-preview hr{border:none;border-top:3px solid #22D3EE;margin:12px 0 18px}
   .kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--border);font-size:13px}
   .kv:last-child{border-bottom:none}
   .kv .k{color:var(--text-muted)}
@@ -347,18 +347,18 @@
   .pipe-col h3{font-size:12px;margin:4px 6px 10px;color:var(--text-muted)}
   .pipe-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px;cursor:pointer}
   .pkt{background:#fbfaf6;color:#1c1c1c;border:1px solid #d7d1c4;border-radius:8px;padding:22px 24px;font-size:12.5px;line-height:1.45}
-  .pkt h1{font-family:Outfit,Arial,sans-serif;font-size:18px;color:#267ECE;margin:0 0 4px}
-  .pkt h2{font-size:13px;margin:16px 0 8px;border-bottom:2px solid #FFC527;padding-bottom:4px}
+  .pkt h1{font-family:Outfit,Arial,sans-serif;font-size:18px;color:#1D4FD8;margin:0 0 4px}
+  .pkt h2{font-size:13px;margin:16px 0 8px;border-bottom:2px solid #22D3EE;padding-bottom:4px}
   .pkt table{width:100%;border-collapse:collapse}
   .pkt td,.pkt th{border:1px solid #ccc;padding:5px 7px;text-align:left;font-size:11.5px}
-  #lockScreen{position:fixed;inset:0;z-index:300;background:linear-gradient(160deg,#0a1720,#155888);display:none;align-items:center;justify-content:center;padding:24px}
+  #lockScreen{position:fixed;inset:0;z-index:300;background:linear-gradient(160deg,#0a1720,#123E91);display:none;align-items:center;justify-content:center;padding:24px}
   #lockScreen.show{display:flex}
   .lock-card{background:#fff;color:#222;width:100%;max-width:420px;border-radius:14px;padding:32px 26px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
   .lock-card h2{font-family:Outfit,sans-serif;margin:0 0 6px}
   .who-row{display:flex;flex-direction:column;gap:10px;margin:16px 0}
   .who-btn{border:2px solid #d5dee8;background:#f4f7fb;border-radius:10px;padding:16px 16px;text-align:left;cursor:pointer;font-weight:700;font-size:15px;position:relative}
-  .who-btn:hover{border-color:#267ECE}
-  .who-btn .role-tag{display:block;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#267ECE;margin-top:3px}
+  .who-btn:hover{border-color:#1D4FD8}
+  .who-btn .role-tag{display:block;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#1D4FD8;margin-top:3px}
   .who-group-label{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8592a0;margin:14px 0 6px}
   .who-group-label:first-of-type{margin-top:2px}
   .disclaimer{font-size:11.5px;color:#6a7a86;margin-top:10px}
@@ -403,10 +403,10 @@
   .stop-acts .btn-maps{ background:#1b5f9e; border-color:#1b5f9e; color:#fff; }
   .stop-acts .btn-call{ background:#1c8a5e; border-color:#1c8a5e; color:#fff; }
   .tech-hero{
-    background:linear-gradient(160deg,#155888,#267ECE);
+    background:linear-gradient(160deg,#123E91,#1D4FD8);
     color:#fff; border-radius:16px; padding:18px 16px 16px; margin-bottom:14px;
   }
-  .tech-hero .hi{ font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#FFC527; }
+  .tech-hero .hi{ font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#22D3EE; }
   .tech-hero h2{ font-size:26px; margin:4px 0 10px; color:#fff; }
   .tech-hero .btn-clock{ max-width:none; width:100%; }
   .gps-chip{
@@ -509,11 +509,12 @@
 </style></head><body><div id="appShell">
   <aside id="sidebar">
     <div class="brand">
-      <img class="brand-logo" alt="Proper Air Conditioning" src="data:image/png;base64,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">
-      <div class="brand-tag">Proper AC · Shop OS</div>
+      <img class="brand-logo" alt="PermitAIO Air" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMUQ0RkQ4Ii8+PGcgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PGxpbmUgeDE9IjUwIiB5MT0iMjAiIHgyPSI1MCIgeTI9IjgwIi8+PGxpbmUgeDE9IjI0IiB5MT0iMzUiIHgyPSI3NiIgeTI9IjY1Ii8+PGxpbmUgeDE9Ijc2IiB5MT0iMzUiIHgyPSIyNCIgeTI9IjY1Ii8+PC9nPjxnIGZpbGw9IiMyMkQzRUUiPjxjaXJjbGUgY3g9IjUwIiBjeT0iMjAiIHI9IjUiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjgwIiByPSI1Ii8+PGNpcmNsZSBjeD0iMjQiIGN5PSIzNSIgcj0iNSIvPjxjaXJjbGUgY3g9Ijc2IiBjeT0iNjUiIHI9IjUiLz48Y2lyY2xlIGN4PSI3NiIgY3k9IjM1IiByPSI1Ii8+PGNpcmNsZSBjeD0iMjQiIGN5PSI2NSIgcj0iNSIvPjwvZz48L3N2Zz4K">
+      <div class="brand-name">PermitAIO<span style="display:inline-block;margin-left:6px;padding:2px 7px;border-radius:99px;background:#22D3EE;color:#0b2447;font-size:11px;font-weight:800;letter-spacing:.03em;vertical-align:2px">AIR</span></div>
+      <div class="brand-tag">Mechanical Permits &amp; Shop OS</div>
     </div>
     <nav class="mainnav" id="mainNav"><div class="navitem" data-route="dashboard"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 10 4l7 6.5"></path><path d="M5 9.5V17h10V9.5"></path><path d="M8.3 17v-4.3h3.4V17"></path></svg><span>Dashboard</span></div><div class="navitem active" data-route="leads"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="2.6"></circle><path d="M2.3 17c0-3 2.1-4.8 4.7-4.8s4.7 1.8 4.7 4.8"></path><circle cx="14.7" cy="7.6" r="2.1"></circle><path d="M12.8 12.7c.6-.3 1.3-.4 2-.4 2.2 0 3.9 1.6 3.9 4.6"></path></svg><span>Leads</span><span class="count">1</span></div><div class="navitem" data-route="estimates"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.5h10v13H5z"></path><path d="M7.2 7h5.6M7.2 10h5.6M7.2 13h3.4"></path></svg><span>Estimates &amp; Invoices</span></div><div class="navitem" data-route="dispatch"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="4.2" width="13.6" height="12.2" rx="1.4"></rect><path d="M3.2 7.4h13.6M7.4 4.2v3.2M12.6 4.2v3.2"></path></svg><span>Dispatch</span></div><div class="navitem" data-route="installs"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3l6 2.2v4.3c0 4-2.6 6.7-6 7.5-3.4-.8-6-3.5-6-7.5V5.2L10 3z"></path><path d="M7.3 10.2l1.8 1.8 3.4-3.8"></path></svg><span>Installs &amp; Warranty</span></div><div class="navitem" data-route="agreements"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.4h5.2L16 8.2v8.4H6z"></path><path d="M11.2 3.4V8H16"></path><path d="M8 11.2h6M8 13.8h4"></path></svg><span>Service Agreements</span></div><div class="navitem" data-route="permits"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.6h7.2L16 7.4v9H5z"></path><path d="M12 3.6V7.4h4"></path><path d="M7.2 11.2h6.2M7.2 13.8h4"></path></svg><span>Permit Inventory</span></div><div class="navitem" data-route="inventory"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.8 10 3l7 3.8v7L10 17.5 3 13.8v-7z"></path><path d="M3 6.8 10 10.4l7-3.6"></path><path d="M10 10.4V17.5"></path></svg><span>Inventory</span></div><div class="navitem" data-route="letters"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.3" y="4.5" width="15.4" height="11" rx="1.3"></rect><path d="M2.8 5.5l7.2 5.5 7.2-5.5"></path></svg><span>Letters</span></div><div class="navitem" data-route="financials"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16.5V9M8 16.5V5M13 16.5v-8M17 16.5V11"></path></svg><span>Financials</span></div><div class="navitem" data-route="team"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"></circle><path d="M10 6v4.3l3 2"></path></svg><span>Team</span></div><div class="navitem" data-route="routes"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.2c1.6 0 1.6-2.4 3.2-2.4S9.3 16.2 11 16.2s1.7-2.4 3.3-2.4 1.6 2.4 3.2 2.4"></path><circle cx="6.2" cy="6.4" r="2.1"></circle><path d="M6.2 8.6v5.2"></path><circle cx="14.2" cy="5.8" r="2.1"></circle><path d="M14.2 8v5.8"></path></svg><span>Routes</span></div><div class="navitem" data-route="marketing"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.2v3.6l3 .5 8 3.3V4.4L6 7.7l-3 .5z"></path><path d="M6 12.3v3a1.4 1.4 0 0 0 2.7.5l.8-2.4"></path></svg><span>Marketing</span></div><div class="navitem" data-route="admin"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">undefined</svg><span>Admin</span></div></nav>
-    <div class="sidefoot" id="sideFoot">619 Whitney Ave · Lantana, FL<br>(561) 545-9727<br><a href="https://www.properac.com" target="_blank" rel="noopener" style="color:#FFC527">properac.com</a></div>
+    <div class="sidefoot" id="sideFoot">PermitAIO Air<br>AC/HVAC Shop OS &amp; Permit Package<br>Palm Beach &amp; Broward</div>
   </aside>
 
   <div id="main">
@@ -558,7 +559,7 @@
   <button class="dock-btn" data-dock="inventory">Stock</button>
   <button class="dock-btn" data-dock="team">Hours</button>
 </nav>
-<div id="modalLayer"><div class="modal-backdrop" id="modalBackdrop"></div><div class="modal" id="modalBox"></div></div><div id="toast"></div><div id="lockScreen"></div><script id="appData" type="application/json">{"company":{"name":"Proper Air Conditioning","tagline":"Efficient. Reliable. Trusted Solutions.","address":"619 Whitney Ave, Suite 2","city":"Lantana","state":"FL","zip":"33462","phone":"(561) 545-9727","email":"service@properac.com","license":"","signer":"","mileageRate":0.7,"qualifier":"","defaultJurisdiction":"Palm Beach County (unincorporated)","syncUrl":"","publicBaseUrl":"","website":"properac.com","leadGenFollowUpDays":45,"callbackWindowDays":30},"leads":[{"business":"","contactName":"ANGELIQUE PADAVANO","phone":"5618883805","email":"PADAVANO.ANGELIQUE@GMAIL.COM","address":"230 S K St","city":"Lake Worth Beach","state":"FL","zip":"33460","systemType":"Package Unit","source":"Repeat Customer","status":"New","value":500,"nextFollowUp":"2027-01-01","notes":"","type":"homeowner","id":"lead_3w9h6","createdAt":"2026-09-07","lastContact":"","jobNo":"Q-1002"}],"units":[],"installs":[{"id":"inst_demo1","jobNo":"J-1003","customerName":"Lake Worth Changeout","customerPhone":"5615459727","address":"412 N A St","city":"Lake Worth Beach","state":"FL","zip":"33460","brand":"Carrier","model":"24TPA736A003","newTons":3,"seer":"16","refrigerant":"R-410A","serial":"","oldBrand":"Goodman","oldModel":"GSC13","oldTons":3,"oldSerial":"","soldPrice":12500,"jobType":"Mechanical changeout \u2014 like for like","ahri":"207812345","installDate":"2026-09-07","folio":"","notes":"Sold changeout \u2014 open Jobs \u2192 J-1003 \u2192 Permit packet"}],"finance":[],"employees":[{"id":"emp_office","name":"Office","role":"Owner","appRole":"Owner","pin":"1111"},{"id":"emp_tech","name":"Field Tech","role":"Tech","appRole":"Tech","pin":"2222"}],"timeLogs":[],"mileageLogs":[],"marketing":[],"letters":[],"meta":{"nextSeq":20,"geoCache":{},"jobSeq":1003},"estimates":[{"id":"est_q1002","jobNo":"Q-1002","leadId":"lead_3w9h6","customerName":"ANGELIQUE PADAVANO","phone":"5618883805","address":"230 S K St","city":"Lake Worth Beach","scope":"Package unit replacement \u2014 like for like","date":"2026-09-07","status":"Sent","total":12500,"goodLabel":"Like-for-like 3 ton package","notes":"Quote. Becomes J-1002 when sold."}],"invoices":[],"jobs":[{"id":"job_demo1","jobNo":"J-1001","customerName":"ANGELIQUE PADAVANO","phone":"5618883805","type":"Service","date":"2026-09-07","window":"9\u201312 PM","techId":"emp_tech","status":"Scheduled","address":"230 S K St","city":"Lake Worth Beach","state":"FL","zip":"33460","title":"Package unit check"},{"id":"job_demo_install","jobNo":"J-1003","customerName":"Lake Worth Changeout","phone":"5615459727","type":"Install","date":"2026-09-08","window":"9\u201312 PM","techId":"emp_tech","status":"Scheduled","address":"412 N A St","city":"Lake Worth Beach","state":"FL","zip":"33460","title":"3 ton package changeout"}],"agreements":[],"permits":[{"id":"perm_demo1","jobNo":"J-1003","installId":"inst_demo1","customerName":"Lake Worth Changeout","address":"412 N A St","city":"Lake Worth Beach","jurisdiction":"Palm Beach County (unincorporated)","permitType":"Mechanical changeout \u2014 like for like","status":"Draft","nocStatus":"Not needed","folio":"","loadCalc":{"floorArea":1800,"stories":1,"ceilingHt":8,"yearBuilt":1988,"construction":"CBS","attic":"vented","ductLoc":"attic","ductWork":"reuse","existingTon":3,"newTon":3,"existingBrand":"Goodman GSC13","occupants":3,"bedrooms":3,"outdoorT":91,"indoorT":75,"winN":40,"winS":60,"winE":30,"winW":30,"verdictOk":true,"verdictText":"Like-for-like SFR replacement \u2014 same tonnage, same location.","tonsNominal":3}}],"packets":[],"checkouts":[],"truckStock":[],"truckTransfers":[],"prospects":[{"audience":"contractor","status":"Active","name":"MAXGUARD HURRICANE WINDOWS","phone":"","email":"ANGELIQUE@MAXGUARDHURRICANE.COM","address":"3900 Fiscal Ct","city":"West Palm Beach","state":"FL","zip":"33404","detail":"","notes":"","id":"pros_27pe8","createdAt":"2026-09-06","firstTouch":"2026-09-06","secondTouch":"2026-09-06","thirdTouch":""}],"priceBook":[]}</script><script id="appScript">
+<div id="modalLayer"><div class="modal-backdrop" id="modalBackdrop"></div><div class="modal" id="modalBox"></div></div><div id="toast"></div><div id="lockScreen"></div><script id="appData" type="application/json">{"company":{"name":"","tagline":"","address":"","city":"","state":"","zip":"","phone":"","email":"","license":"","signer":"","mileageRate":0.7,"qualifier":"","defaultJurisdiction":"Palm Beach County (unincorporated)","syncUrl":"","publicBaseUrl":"","website":"","leadGenFollowUpDays":45,"callbackWindowDays":30},"leads":[],"units":[],"installs":[],"finance":[],"employees":[{"id":"emp_office","name":"Office","role":"Owner","appRole":"Owner","pin":"1111"},{"id":"emp_tech","name":"Field Tech","role":"Tech","appRole":"Tech","pin":"2222"}],"timeLogs":[],"mileageLogs":[],"marketing":[],"letters":[],"meta":{"nextSeq":1,"geoCache":{},"jobSeq":1000},"estimates":[],"invoices":[],"jobs":[],"agreements":[],"permits":[],"packets":[],"checkouts":[],"truckStock":[],"truckTransfers":[],"prospects":[],"priceBook":[]}</script><script id="appScript">
 (function(){
 "use strict";
 
@@ -574,11 +575,11 @@ var APP_STYLE_TEXT = document.getElementById('appStyle').textContent;
    ========================================================= */
 var DEFAULT_DATA = {
   company:{
-    name:"Proper Air Conditioning", tagline:"Efficient. Reliable. Trusted Solutions.",
-    address:"619 Whitney Ave, Suite 2", city:"Lantana", state:"FL", zip:"33462",
-    phone:"(561) 545-9727", email:"service@properac.com", license:"", signer:"", mileageRate:0.70,
+    name:"", tagline:"",
+    address:"", city:"", state:"", zip:"",
+    phone:"", email:"", license:"", signer:"", mileageRate:0.70,
     qualifier:"", defaultJurisdiction:"Palm Beach County (unincorporated)", syncUrl:"", publicBaseUrl:"",
-    website:"properac.com", leadGenFollowUpDays:45, callbackWindowDays:30, newInstallAgreementDiscountPct:15
+    website:"", leadGenFollowUpDays:45, callbackWindowDays:30, newInstallAgreementDiscountPct:15
   },
   leads:[], units:[], installs:[], finance:[], employees:[], timeLogs:[], mileageLogs:[], marketing:[], letters:[],
   estimates:[], invoices:[], jobs:[], agreements:[], permits:[], packets:[], checkouts:[],
@@ -594,7 +595,7 @@ function loadInitialData(){
     if(parsed && typeof parsed === 'object' && parsed.company){ return mergeDefaults(parsed); }
   }catch(e){ console.warn('appData parse failed, trying localStorage', e); }
   try{
-    var ls = localStorage.getItem('properac_data');
+    var ls = localStorage.getItem('permitaio_air_data');
     if(ls){ return mergeDefaults(JSON.parse(ls)); }
   }catch(e){}
   return JSON.parse(JSON.stringify(DEFAULT_DATA));
@@ -617,15 +618,9 @@ function mergeDefaults(parsed){
   if(!parsed.company.defaultJurisdiction) parsed.company.defaultJurisdiction='Palm Beach County (unincorporated)';
   if(parsed.company.syncUrl===undefined) parsed.company.syncUrl='';
   if(parsed.company.publicBaseUrl===undefined) parsed.company.publicBaseUrl='';
-  if(!parsed.company.website) parsed.company.website='properac.com';
   if(!parsed.company.leadGenFollowUpDays) parsed.company.leadGenFollowUpDays=45;
   if(!parsed.company.callbackWindowDays) parsed.company.callbackWindowDays=30;
-  var brandFill = {name:'Proper Air Conditioning', tagline:'Efficient. Reliable. Trusted Solutions.', address:'619 Whitney Ave, Suite 2', city:'Lantana', state:'FL', zip:'33462', phone:'(561) 545-9727', email:'service@properac.com'};
   parsed.company = parsed.company || {};
-  if(!parsed.company.name || parsed.company.name==='Proper AC') parsed.company.name = brandFill.name;
-  ['tagline','address','city','state','zip','phone','email'].forEach(function(k){
-    if(!parsed.company[k]) parsed.company[k] = brandFill[k];
-  });
   return parsed;
 }
 
@@ -633,7 +628,7 @@ var state = { route:'dashboard', leadTab:'all', leadSearch:'', installFilter:'al
   lgAudience:'homeowner', lgSearch:'', lgStatFilter:null, lgShowEntry:false, lgForm:null, lgBulkRows:[], lgFileName:'', lgPasteText:'', lgImportCounty:'', lgConvertId:null, lgEmailLevel:1 };
 (function applySavedTheme(){
   try{
-    var t = localStorage.getItem('properac_theme');
+    var t = localStorage.getItem('permitaio_air_theme');
     if(t==='dark' || t==='light') document.documentElement.setAttribute('data-theme', t);
   }catch(e){}
 })();
@@ -643,12 +638,12 @@ var state = { route:'dashboard', leadTab:'all', leadSearch:'', installFilter:'al
    ========================================================= */
 function currentSession(){
   if(state.session) return state.session;
-  try{ var s=sessionStorage.getItem('properac_session'); if(s){ state.session=JSON.parse(s); return state.session; } }catch(e){}
+  try{ var s=sessionStorage.getItem('permitaio_air_session'); if(s){ state.session=JSON.parse(s); return state.session; } }catch(e){}
   return null;
 }
 function setSession(sess){
   state.session = sess;
-  try{ if(sess) sessionStorage.setItem('properac_session', JSON.stringify(sess)); else sessionStorage.removeItem('properac_session'); }catch(e){}
+  try{ if(sess) sessionStorage.setItem('permitaio_air_session', JSON.stringify(sess)); else sessionStorage.removeItem('permitaio_air_session'); }catch(e){}
   if(sess && (sess.role==='Tech' || (empByld(sess.employeeId)||{}).appRole==='Tech')) startAutoGps();
   else stopAutoGps();
 }
@@ -1251,10 +1246,10 @@ function buildFullHTML(dataObj){
   var json = JSON.stringify(dataObj).replace(/</g,'\\u003c');
   var headBits =
     '<meta charset="utf-8">'+
-    '<title>Proper AC Command Center</title>'+
+    '<title>PermitAIO Air</title>'+
     '<link rel="preconnect" href="https://fonts.googleapis.com">'+
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'+
-    '<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">'+
+    '<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">'+
     '<style id="appStyle">'+APP_STYLE_TEXT+'</style>';
   var bodyBits = document.getElementById('appShell').outerHTML +
     '<div id="modalLayer"><div class="modal-backdrop" id="modalBackdrop"></div><div class="modal" id="modalBox"></div></div>'+
@@ -1266,7 +1261,7 @@ function buildFullHTML(dataObj){
 }
 
 function persist(){
-  try{ localStorage.setItem('properac_data', JSON.stringify(DATA)); }catch(e){}
+  try{ localStorage.setItem('permitaio_air_data', JSON.stringify(DATA)); }catch(e){}
   if(!artifactReady || !claudeArtifact){ return; }
   clearTimeout(publishTimer);
   pendingPublish = true;
@@ -1289,7 +1284,7 @@ function downloadBackup(){
   var blob = new Blob([JSON.stringify(DATA, null, 2)], {type:'application/json'});
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'properac-backup-'+todayStr()+'.json';
+  a.download = 'permitaio-air-backup-'+todayStr()+'.json';
   a.click();
   setTimeout(function(){ URL.revokeObjectURL(a.href); }, 500);
   toast('Backup downloaded');
@@ -1311,7 +1306,7 @@ function openBackupModal(){
     reader.onload = function(){
       try{
         var parsed = JSON.parse(reader.result);
-        if(!parsed || !parsed.company){ toast('Not a valid Proper AC backup'); return; }
+        if(!parsed || !parsed.company){ toast('Not a valid PermitAIO Air backup'); return; }
         if(!confirm('Replace all current data with this backup?')) return;
         DATA = mergeDefaults(parsed);
         persist(); closeModal(); render(); toast('Backup restored');
@@ -1324,7 +1319,7 @@ function toggleTheme(){
   var cur = document.documentElement.getAttribute('data-theme');
   var next = cur==='dark' ? 'light' : (cur==='light' ? 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark'));
   document.documentElement.setAttribute('data-theme', next);
-  try{ localStorage.setItem('properac_theme', next); }catch(e){}
+  try{ localStorage.setItem('permitaio_air_theme', next); }catch(e){}
 }
 function toggleSidebar(force){
   var sb = document.getElementById('sidebar');
@@ -2678,7 +2673,7 @@ function lgLetterCss(){
     '.lg-details b{color:#14181d}'+
     '.lg-help{margin:8px 0 14px;padding:0;list-style:none;font-family:Arial,sans-serif;font-size:9.5pt}'+
     '.lg-help li{position:relative;padding-left:16px;margin-bottom:4px}'+
-    '.lg-help li:before{content:"\\2713";position:absolute;left:0;color:#267ECE;font-weight:800}'+
+    '.lg-help li:before{content:"\\2713";position:absolute;left:0;color:#1D4FD8;font-weight:800}'+
     '.lg-sig{margin-top:4px;font-size:11pt}'+
     '.lg-footer{position:absolute;bottom:.5in;left:.6in;right:.6in;display:flex;align-items:center;gap:14px;border-top:1px solid #d8dee3;padding-top:10px;font-family:Arial,sans-serif;font-size:8.5pt;color:#4f6d7a}'+
     '.lg-footer img{width:.8in;height:.8in;flex-shrink:0}';
@@ -2690,7 +2685,7 @@ function drawProspectLetter(p, level){
   var levelLabel = lvl>=3 ? 'Staying In Touch' : lvl===2 ? 'Following Up' : 'Introduction';
   var addrLines = [p.name, p.address, [p.city,p.state,p.zip].filter(Boolean).join(', ')].filter(Boolean);
   var paras = prospectLetterParagraphs(aud, lvl, p);
-  var website = co.website || 'properac.com';
+  var website = co.website || '';
   var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&ecc=M&data='+encodeURIComponent(/^https?:\/\//.test(website)?website:'https://'+website);
   return (
     '<div class="lg-page">'+
@@ -2962,7 +2957,7 @@ function renderLetters(){
   return (
     renderLeadGen()+
     '<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-bottom:20px">'+
-      letterLauncher('b2b-intro','B2B Partnership Letter','Introduce Proper AC to a contractor sourced from FL license records.')+
+      letterLauncher('b2b-intro','B2B Partnership Letter','Introduce PermitAIO Air to a contractor sourced from FL license records.')+
       letterLauncher('homeowner-intro','Homeowner Intro Letter','Direct-mail introduction for a residential prospect.')+
       letterLauncher('service-reminder','Service Reminder Letter','Maintenance/warranty reminder for a specific installed unit.')+
       letterLauncher('warranty-info','Warranty Information Letter','Warranty coverage details plus a discounted Service Agreement offer, good for 30 days after install.')+
@@ -3090,9 +3085,9 @@ function printLetterHTML(innerHtml){
   if(!w){ toast('Please allow pop-ups to print'); return; }
   var doc = w.document;
   var css = "body{font-family:Georgia,'Times New Roman',serif;color:#1c1c1c;max-width:6.8in;margin:0.6in auto;font-size:12.5pt;line-height:1.6}"+
-    ".lh-name{font-family:Arial,sans-serif;font-weight:800;font-size:19pt;color:#267ECE}"+
+    ".lh-name{font-family:Arial,sans-serif;font-weight:800;font-size:19pt;color:#1D4FD8}"+
     ".lh-tag{font-size:10.5pt;color:#434343;margin-top:2px}"+
-    "hr{border:none;border-top:3px solid #FFC527;margin:12px 0 20px}"+
+    "hr{border:none;border-top:3px solid #22D3EE;margin:12px 0 20px}"+
     "@page{margin:0.75in}";
   doc.open();
   doc.write('<!doctype html><html><head><meta charset="utf-8"><title>Letter</title><style>'+css+'</style></head><body>'+innerHtml+'</body></html>');
@@ -3118,12 +3113,12 @@ function printJobLabels(inst){
   var css =
     '@page{size:letter;margin:.45in}'+
     'body{font-family:Arial,sans-serif;color:#222;margin:0;background:#fff}'+
-    'h1{font-size:14px;margin:0 0 10px;color:#267ECE}'+
+    'h1{font-size:14px;margin:0 0 10px;color:#1D4FD8}'+
     '.sheet{display:flex;gap:16px;flex-wrap:wrap}'+
     '.label{width:3.5in;height:2.1in;border:2px solid #222;border-radius:8px;padding:10px 12px;box-sizing:border-box;position:relative}'+
-    '.label.tech{border-color:#267ECE}'+
+    '.label.tech{border-color:#1D4FD8}'+
     '.label.cust{border-color:#c9a227}'+
-    '.kicker{font-size:8px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#267ECE}'+
+    '.kicker{font-size:8px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#1D4FD8}'+
     '.cust .kicker{color:#8a6d00}'+
     '.job{font-size:22px;font-weight:800;margin:2px 0 4px;letter-spacing:.02em}'+
     '.meta{font-size:11px;line-height:1.3}'+
@@ -3187,7 +3182,7 @@ function renderPublicWarranty(jobNo){
     html = '<div class="empty-state"><div class="big">We could not find that system</div>Call '+escapeHtml(DATA.company.phone||'')+' with your job number.</div>';
   } else {
     html =
-      '<div class="helpbox">This is your Proper AC system card. Save this page. Call us for service and give them <b>'+escapeHtml(inst.jobNo)+'</b>.</div>'+
+      '<div class="helpbox">This is your PermitAIO Air system card. Save this page. Call us for service and give them <b>'+escapeHtml(inst.jobNo)+'</b>.</div>'+
       '<div class="card"><div class="card-body">'+
       '<div class="kv"><span class="k">Job #</span><span class="mono">'+escapeHtml(inst.jobNo||'')+'</span></div>'+
       '<div class="kv"><span class="k">Property</span><span>'+escapeHtml(inst.customerName||'')+'<br>'+escapeHtml([inst.address,inst.city,inst.state,inst.zip].filter(Boolean).join(', '))+'</span></div>'+
@@ -3206,7 +3201,7 @@ function printReport(title, columns, rows){
   var w = window.open('', '_blank');
   if(!w){ toast('Please allow pop-ups to print'); return; }
   var css = "body{font-family:Arial,sans-serif;color:#1c1c1c;margin:0.5in;font-size:10.5pt}"+
-    "h1{font-family:Arial,sans-serif;color:#267ECE;font-size:16pt;margin-bottom:2px}"+
+    "h1{font-family:Arial,sans-serif;color:#1D4FD8;font-size:16pt;margin-bottom:2px}"+
     ".sub{color:#4f6d7a;font-size:10pt;margin-bottom:14px}"+
     "table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid #ccc;padding:6px 8px;text-align:left;font-size:9.5pt}th{background:#eaf2f7}"+
     "@page{margin:0.6in}";
@@ -3763,8 +3758,8 @@ function paintRouteMap(orderResult){
   allPts.forEach(function(r, idx){
     var marker = L.circleMarker([r.pt.lat, r.pt.lng], {
       radius: r.isShop? 9: 7,
-      color: r.isShop? '#222':'#267ECE',
-      fillColor: r.isShop? '#FFC527':'#267ECE',
+      color: r.isShop? '#222':'#1D4FD8',
+      fillColor: r.isShop? '#22D3EE':'#1D4FD8',
       fillOpacity: 1, weight: 2
     }).addTo(map);
     var stopNo = r.isShop ? null : idx; // idx already accounts for the shop entry at 0
@@ -4049,7 +4044,7 @@ function showLock(){
   // Bootstrap: nobody has a PIN set up yet. Nothing is accessible until this
   // one big button is tapped — set up real team logins any time in Admin.
   if(!people.length){
-    box.innerHTML='<div class="lock-card"><div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#267ECE;margin-bottom:8px">Proper AC</div><h2>'+escapeHtml(DATA.company.name)+'</h2><p class="today-sub">No team logins are set up yet. Log in below to open the shop file — add PINs for your team any time in Admin &rarr; Team &amp; Login Access.</p><button class="btn btn-primary btn-huge" id="lockEnter">Log In</button></div>';
+    box.innerHTML='<div class="lock-card"><div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#1D4FD8;margin-bottom:8px">PermitAIO Air</div><h2>'+escapeHtml(DATA.company.name)+'</h2><p class="today-sub">No team logins are set up yet. Log in below to open the shop file — add PINs for your team any time in Admin &rarr; Team &amp; Login Access.</p><button class="btn btn-primary btn-huge" id="lockEnter">Log In</button></div>';
     box.classList.add('show');
     document.getElementById('lockEnter').onclick=function(){
       setSession({employeeId:null,name:'Owner',role:'Owner'});
@@ -4062,13 +4057,13 @@ function showLock(){
   var admins=people.filter(function(e){ return (e.appRole||'')!=='Tech'; });
   var techs=people.filter(function(e){ return (e.appRole||'')==='Tech'; });
   function tile(e){ return '<button class="who-btn" data-login="'+e.id+'">'+escapeHtml(e.name)+'<span class="role-tag">'+escapeHtml(e.appRole||e.role||'Tech')+'</span></button>'; }
-  box.innerHTML='<div class="lock-card"><div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#267ECE;margin-bottom:8px">Proper AC</div><h2>'+escapeHtml(DATA.company.name)+'</h2><p class="today-sub">Nothing is accessible until you log in. Who is opening the shop file?</p>'+
+  box.innerHTML='<div class="lock-card"><div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#1D4FD8;margin-bottom:8px">PermitAIO Air</div><h2>'+escapeHtml(DATA.company.name)+'</h2><p class="today-sub">Nothing is accessible until you log in. Who is opening the shop file?</p>'+
     (admins.length? '<div class="who-group-label">Owner / Office</div><div class="who-row">'+admins.map(tile).join('')+'</div>' : '')+
     (techs.length? '<div class="who-group-label">Tech Login</div><div class="who-row">'+techs.map(tile).join('')+'</div>' : '')+
     '<div class="field"><label>PIN</label><input id="lockPin" type="password" inputmode="numeric" autocomplete="off"></div><button class="btn btn-primary btn-huge" id="lockGo">Log In</button><p class="disclaimer">Same JSON file on every phone. Owner downloads a backup after a busy day; techs restore it or pull the hosted URL.</p></div>';
   box.classList.add('show');
   var chosen=people[0]&&people[0].id;
-  box.querySelectorAll('[data-login]').forEach(function(btn){ btn.addEventListener('click', function(){ chosen=btn.getAttribute('data-login'); box.querySelectorAll('.who-btn').forEach(function(b){ b.style.borderColor='#d5dee8'; }); btn.style.borderColor='#267ECE'; }); });
+  box.querySelectorAll('[data-login]').forEach(function(btn){ btn.addEventListener('click', function(){ chosen=btn.getAttribute('data-login'); box.querySelectorAll('.who-btn').forEach(function(b){ b.style.borderColor='#d5dee8'; }); btn.style.borderColor='#1D4FD8'; }); });
   document.getElementById('lockGo').onclick=function(){
     var emp=DATA.employees.filter(function(e){return e.id===chosen;})[0]; var pin=(document.getElementById('lockPin').value||'').trim();
     if(!emp||String(emp.pin)!==pin){ toast('PIN does not match'); return; }
@@ -4103,7 +4098,7 @@ function openSettings(){
       {key:'newInstallAgreementDiscountPct', label:'New-Install Agreement Discount (%)', type:'number', half:true, hint:'Discount offered on a Service Agreement if purchased within 30 days of a new install — used on the Warranty Information Letter.'},
       {key:'defaultJurisdiction', label:'Default Jurisdiction', type:'select', options:JURISDICTIONS, half:true},
       {key:'syncUrl', label:'Shared workspace JSON URL (optional)', type:'text', hint:'Paste a raw JSON backup URL if the owner hosts the shop file for techs. Pull from Backup.'},
-      {key:'publicBaseUrl', label:'Public shop URL (customer warranty QR)', type:'text', hint:'Where this file will live for customers, e.g. https://app.permitaio.com/properac.html — QR uses this + #w/J-1001.'},
+      {key:'publicBaseUrl', label:'Public shop URL (customer warranty QR)', type:'text', hint:'Where this file will live for customers, e.g. https://permitaio.com/ac — QR uses this + #w/J-1001.'},
       {key:'mileageRate', label:'Mileage Rate ($/mi)', type:'number', half:true, hint:'Update to the current IRS standard rate as it changes each year.'}
     ],
     initial: DATA.company,
@@ -4735,7 +4730,7 @@ function printPermitPacket(p, inst, which){
     DATA.packets.push({id:uid('pkt'),permitId:p.id,date:todayStr(),kind:'complete'}); persist();
   }
   var w=window.open('','_blank'); if(!w){ toast('Allow pop-ups to print'); return; }
-  w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Permit packet</title><style>body{font-family:Arial,sans-serif;margin:.6in}h1{color:#267ECE}h2{border-bottom:3px solid #FFC527;font-size:14px}table{width:100%;border-collapse:collapse;margin:8px 0}td,th{border:1px solid #ccc;padding:6px 8px;font-size:11.5px;text-align:left}th{background:#eaf2f7;width:24%}@page{margin:.6in}</style></head><body>'+docs.join('<div style="page-break-after:always"></div>')+'</body></html>');
+  w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Permit packet</title><style>body{font-family:Arial,sans-serif;margin:.6in}h1{color:#1D4FD8}h2{border-bottom:3px solid #22D3EE;font-size:14px}table{width:100%;border-collapse:collapse;margin:8px 0}td,th{border:1px solid #ccc;padding:6px 8px;font-size:11.5px;text-align:left}th{background:#eaf2f7;width:24%}@page{margin:.6in}</style></head><body>'+docs.join('<div style="page-break-after:always"></div>')+'</body></html>');
   w.document.close(); w.focus(); setTimeout(function(){ w.print(); },350); toast('Packet sent to print');
 }
 function isBrowardAhj(jur){
@@ -4760,17 +4755,17 @@ function packetContext(p, inst){
     siteAddress: addr, siteCity: city, siteUnit: p.unit || inst.unit || '',
     folio: folio, legal: p.legal || inst.legal || '',
     value: value, work: work,
-    company: co.name || 'Proper Air Conditioning',
-    qualifier: co.qualifier || co.signer || co.name || 'Proper Air Conditioning',
+    company: co.name || '',
+    qualifier: co.qualifier || co.signer || co.name || '',
     license: co.license || '',
     contact: co.signer || co.qualifier || '',
-    coAddress: co.address || '619 Whitney Ave, Suite 2',
+    coAddress: co.address || '',
     coSuite: '2',
     coCity: co.city || 'Lantana',
     coState: co.state || 'FL',
     coZip: co.zip || '33462',
-    coPhone: co.phone || '(561) 545-9727',
-    coEmail: co.email || 'service@properac.com',
+    coPhone: co.phone || '',
+    coEmail: co.email || '',
     date: todayStr(),
     newBrand: inst.brand||'', newModel: inst.model||'', newTons: inst.newTons||'',
     newSeer: inst.seer||'', newRefrig: inst.refrigerant||'', newSerial: inst.serial||'',
@@ -4781,7 +4776,7 @@ function packetContext(p, inst){
 }
 function attDb(){
   return new Promise(function(resolve, reject){
-    var req = indexedDB.open('properac-attachments', 1);
+    var req = indexedDB.open('permitaio-air-attachments', 1);
     req.onupgradeneeded = function(){ req.result.createObjectStore('files', {keyPath:'id'}); };
     req.onsuccess = function(){ resolve(req.result); };
     req.onerror = function(){ reject(req.error); };
@@ -4966,7 +4961,7 @@ function openAppraiserLookup(p, inst){
   var broward = isBrowardAhj(p.jurisdiction);
   var q0 = p.address || inst.address || p.folio || '';
   var body = '<div class="helpbox">'+(broward
-    ? 'Broward BCPA does not publish owner fields for one-click fill. Search BCPA, then paste owner / folio / legal here. Contractor block still auto-fills Proper AC on the PDF.'
+    ? 'Broward BCPA does not publish owner fields for one-click fill. Search BCPA, then paste owner / folio / legal here. Contractor block still auto-fills your company info on the PDF.'
     : 'Palm Beach parcels load from the county GIS layer. Pick a match to write owner, folio, address, and legal onto this job, then the PBC application PDF.')+
     '</div><div class="field"><label>Address or folio</label><input id="paQuery" value="'+escapeHtml(q0)+'"></div>'+
     '<div id="paResults" class="field-hint">Enter an address and Search.</div>';
@@ -5192,7 +5187,7 @@ async function addCoverPage(outPdf, ctx, jur){
   var bold = await outPdf.embedFont(PDFLib.StandardFonts.HelveticaBold);
   var y = 740;
   function line(t, size, f){ page.drawText(pdfSafe(t).slice(0,95), {x:48, y:y, size:size||11, font:f||font}); y -= (size||11)+6; }
-  line('PROPER AIR CONDITIONING', 16, bold);
+  line((ctx.company||'PERMITAIO AIR').toUpperCase(), 16, bold);
   line('Permit packet - '+jur, 12, bold);
   y -= 8;
   line('Does not file with the city. Print, sign, upload in the AHJ portal.', 9);
@@ -5268,7 +5263,7 @@ async function addLoadCalcPage(outPdf, p, ctx){
     };
   }
   var w = pageWriter();
-  w.line('PROPER AIR CONDITIONING — COMPLETE PERMIT PACKAGE', 13, bold);
+  w.line((ctx.company||'PERMITAIO AIR').toUpperCase()+' — COMPLETE PERMIT PACKAGE', 13, bold);
   w.line('Heat load  ·  like-for-like worksheet  ·  engineer order', 10, bold);
   w.gap(4);
   w.line((ctx.owner||'')+'  ·  '+(ctx.siteAddress||'')+', '+(ctx.siteCity||'')+' FL');
@@ -5301,7 +5296,7 @@ async function addLoadCalcPage(outPdf, p, ctx){
   ].forEach(function(row){ w.line(row[0]+':  '+row[1], 10); });
   w.gap(10);
   w.line('B. ENGINEER ORDER — send this page if the determination is not like-for-like', 11, bold);
-  w.line('Please provide ACCA Manual J (and Manual S / D if ducts or tonnage change). Return PDF to service@properac.com.', 9);
+  w.line('Please provide ACCA Manual J (and Manual S / D if ducts or tonnage change). Return PDF to '+(ctx.coEmail||'the shop')+'.', 9);
   w.line('Vendor: '+(r.engineerName||'________________')+'   Email: '+(r.engineerEmail||'________________'), 10);
   w.line('Existing equipment: '+(r.existingBrand||'')+'  '+(r.existingTon||'')+' ton', 10);
   w.line('Proposed equipment: '+(ctx.newEq||'')+(r.newTon?('  '+r.newTon+' ton'):''), 10);
@@ -5309,7 +5304,7 @@ async function addLoadCalcPage(outPdf, p, ctx){
   w.line('Notes: '+(r.notes||'none'), 10);
   w.gap(8);
   w.line('Attached to this package: city application, city forms, this worksheet, spec sheets / NOAs / AHRI / photos uploaded on the job.', 9);
-  w.line('Contractor: Proper Air Conditioning LLC  ·  619 Whitney Ave Suite 2, Lantana FL 33462  ·  (561) 545-9727', 9);
+  w.line('Contractor: '+[ctx.company,ctx.coAddress,ctx.coPhone].filter(Boolean).join('  ·  '), 9);
   w.line('Qualifier: '+(ctx.qualifier||'')+'   License: '+(ctx.license||''), 9);
   w.line('This package does not file with the city. Shop submits after print/sign.', 8);
 }
@@ -5350,7 +5345,7 @@ function downloadEngineerOrderPdf(p, inst){
     }).then(function(bytes){
       var a=document.createElement('a');
       a.href=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
-      a.download=(p.jobNo||'ProperAC')+'-engineer-order.pdf';
+      a.download=(p.jobNo||'PermitAIOAir')+'-engineer-order.pdf';
       a.click();
       toast('Engineer order PDF ready to send');
     }).catch(function(){ toast('Could not build engineer order'); });
@@ -5363,7 +5358,7 @@ function downloadCityPacketPdf(p, inst){
       var blob = new Blob([bytes], {type:'application/pdf'});
       var a=document.createElement('a');
       a.href=URL.createObjectURL(blob);
-      a.download=(p.jobNo||'ProperAC')+'-'+(p.jurisdiction||'packet').replace(/[^A-Za-z0-9]+/g,'-')+'-packet.pdf';
+      a.download=(p.jobNo||'PermitAIOAir')+'-'+(p.jurisdiction||'packet').replace(/[^A-Za-z0-9]+/g,'-')+'-packet.pdf';
       a.click();
       setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
       if(p.status==='Draft') p.status='Packet Ready';
@@ -5386,7 +5381,7 @@ function ensureJSZip(cb){
   document.head.appendChild(s);
 }
 function shopSheetBlob(html){
-  var doc = '<!doctype html><html><head><meta charset="utf-8"><title>Proper AC packet</title><style>body{font-family:Arial,sans-serif;margin:.6in}h1{color:#267ECE}h2{border-bottom:3px solid #FFC527;font-size:14px}table{width:100%;border-collapse:collapse;margin:8px 0}td,th{border:1px solid #ccc;padding:6px 8px;font-size:11.5px;text-align:left}th{background:#eaf2f7}</style></head><body>'+html+'</body></html>';
+  var doc = '<!doctype html><html><head><meta charset="utf-8"><title>PermitAIO Air packet</title><style>body{font-family:Arial,sans-serif;margin:.6in}h1{color:#1D4FD8}h2{border-bottom:3px solid #22D3EE;font-size:14px}table{width:100%;border-collapse:collapse;margin:8px 0}td,th{border:1px solid #ccc;padding:6px 8px;font-size:11.5px;text-align:left}th{background:#eaf2f7}</style></head><body>'+html+'</body></html>';
   return new Blob([doc], {type:'text/html'});
 }
 function downloadPermitZip(p, inst){
@@ -5397,9 +5392,9 @@ function downloadPermitZip(p, inst){
     var co = DATA.company||{};
     var ahj = resolveAhj(p.jurisdiction);
     var meta = {
-      contractor: co.name||'Proper Air Conditioning',
-      phone: co.phone||'(561) 545-9727',
-      email: co.email||'service@properac.com',
+      contractor: co.name||'',
+      phone: co.phone||'',
+      email: co.email||'',
       license: co.license||'',
       jobNo: p.jobNo, status: p.status, jurisdiction: p.jurisdiction,
       owner: p.customerName, address: p.address||inst.address, city: p.city||inst.city,
@@ -5412,17 +5407,17 @@ function downloadPermitZip(p, inst){
     folder.file('01-application.html', new Blob([
       '<!doctype html><html><head><meta charset="utf-8"><title>Application</title></head><body>'+
       pktWrap('Mechanical Permit Application — '+escapeHtml(p.jurisdiction||''),
-        '<table><tr><th>Owner</th><td>'+escapeHtml(p.customerName||'')+'</td></tr><tr><th>Address</th><td>'+escapeHtml([p.address||inst.address,p.city||inst.city].filter(Boolean).join(', '))+'</td></tr><tr><th>Folio</th><td>'+escapeHtml(p.folio||inst.folio||'')+'</td></tr><tr><th>Type</th><td>'+escapeHtml(p.permitType||'')+'</td></tr><tr><th>Contractor</th><td>'+escapeHtml(co.name||'Proper Air Conditioning')+'</td></tr><tr><th>New equipment</th><td>'+escapeHtml((inst.brand||'')+' '+(inst.model||'')+' · '+(inst.newTons||'')+' ton · '+(inst.refrigerant||''))+'</td></tr></table>')+
+        '<table><tr><th>Owner</th><td>'+escapeHtml(p.customerName||'')+'</td></tr><tr><th>Address</th><td>'+escapeHtml([p.address||inst.address,p.city||inst.city].filter(Boolean).join(', '))+'</td></tr><tr><th>Folio</th><td>'+escapeHtml(p.folio||inst.folio||'')+'</td></tr><tr><th>Type</th><td>'+escapeHtml(p.permitType||'')+'</td></tr><tr><th>Contractor</th><td>'+escapeHtml(co.name||'')+'</td></tr><tr><th>New equipment</th><td>'+escapeHtml((inst.brand||'')+' '+(inst.model||'')+' · '+(inst.newTons||'')+' ton · '+(inst.refrigerant||''))+'</td></tr></table>')+
       '</body></html>'
     ], {type:'text/html'}));
     folder.file('02-noc.html', new Blob(['<!doctype html><html><head><meta charset="utf-8"></head><body>'+pktWrap('Notice of Commencement','<p>Owner records with the Clerk. Valuation '+fmtMoney0(inst.soldPrice||p.fee||0)+'</p><p>'+escapeHtml([p.address||inst.address,p.folio||inst.folio].filter(Boolean).join(' · '))+'</p>')+'</body></html>'],{type:'text/html'}));
     folder.file('03-switchout.html', new Blob(['<!doctype html><html><head><meta charset="utf-8"></head><body>'+pktWrap('Equipment switch-out','<p>Existing: '+escapeHtml((inst.oldBrand||'')+' '+(inst.oldModel||''))+'</p><p>New: '+escapeHtml((inst.brand||'')+' '+(inst.model||'')+' SN '+(inst.serial||''))+'</p>')+'</body></html>'],{type:'text/html'}));
     folder.file('README.txt',
-      'Proper Air Conditioning — permit packet for '+ (p.jobNo||'') +'\n'+
+      (co.name||'PermitAIO Air') + ' — permit packet for '+ (p.jobNo||'') +'\n'+
       'Jurisdiction: '+(p.jurisdiction||'')+'\n'+
       'This ZIP does NOT file with the city.\n'+
       '00-CITY-PACKET.pdf is the complete package (filled application, city forms, heat load, spec/NOA).\n'+
-      '04-official-forms/ has each official PDF filled with owner, folio, address, and Proper AC contractor info.\n'+
+      '04-official-forms/ has each official PDF filled with owner, folio, address, and your contractor info.\n'+
       'Review, sign, add AHRI + property card, upload in the city portal.\n'+
       'PBC appraiser: https://www.pbcgov.org/papa/\n'+
       'Broward appraiser: https://web.bcpa.net/\n'
@@ -5450,7 +5445,7 @@ function downloadPermitZip(p, inst){
     }).then(function(blob){
       var a=document.createElement('a');
       a.href=URL.createObjectURL(blob);
-      a.download=(p.jobNo||'ProperAC')+'-'+(p.city||p.jurisdiction||'packet').replace(/\s+/g,'-')+'-permit.zip';
+      a.download=(p.jobNo||'PermitAIOAir')+'-'+(p.city||p.jurisdiction||'packet').replace(/\s+/g,'-')+'-permit.zip';
       a.click();
       setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
       if(p.status==='Draft') p.status='Packet Ready';
