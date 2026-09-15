@@ -544,7 +544,7 @@
   <button class="dock-btn" data-dock="inventory">Stock</button>
   <button class="dock-btn" data-dock="team">Hours</button>
 </nav>
-<div id="modalLayer"><div class="modal-backdrop" id="modalBackdrop"></div><div class="modal" id="modalBox"></div></div><div id="toast"></div><div id="lockScreen"></div><script id="appData" type="application/json">{"company":{"name":"","tagline":"","address":"","city":"","state":"","zip":"","phone":"","email":"","license":"","signer":"","mileageRate":0.7,"qualifier":"","defaultJurisdiction":"Palm Beach County (unincorporated)","syncUrl":"","publicBaseUrl":"","website":"","leadGenFollowUpDays":45,"callbackWindowDays":30},"leads":[],"units":[],"installs":[],"finance":[],"employees":[{"id":"emp_office","name":"Office","role":"Owner","appRole":"Owner","pin":"1111"},{"id":"emp_tech","name":"Field Tech","role":"Tech","appRole":"Tech","pin":"2222"}],"timeLogs":[],"mileageLogs":[],"marketing":[],"letters":[],"meta":{"nextSeq":1,"geoCache":{},"jobSeq":1000},"estimates":[],"invoices":[],"jobs":[],"agreements":[],"permits":[],"packets":[],"checkouts":[],"truckStock":[],"truckTransfers":[],"prospects":[],"priceBook":[]}</script><script id="appScript">
+<div id="modalLayer"><div class="modal-backdrop" id="modalBackdrop"></div><div class="modal" id="modalBox"></div></div><div id="toast"></div><div id="lockScreen"></div><script id="appData" type="application/json">{"company":{"name":"","tagline":"","address":"","city":"","state":"","zip":"","phone":"","email":"","license":"","signer":"","mileageRate":0.7,"qualifier":"","defaultJurisdiction":"Palm Beach County (unincorporated)","syncUrl":"","publicBaseUrl":"","website":"","leadGenFollowUpDays":45,"callbackWindowDays":30},"leads":[],"units":[],"installs":[],"finance":[],"employees":[{"id":"emp_office","name":"Office","role":"Owner","appRole":"Owner","pin":"1111"},{"id":"emp_tech","name":"Field Tech","role":"Tech","appRole":"Tech","pin":"2222"}],"timeLogs":[],"mileageLogs":[],"marketing":[],"letters":[],"meta":{"nextSeq":1,"geoCache":{},"jobSeq":1000},"estimates":[],"invoices":[],"jobs":[],"agreements":[],"permits":[],"packets":[],"checkouts":[],"truckStock":[],"truckTransfers":[],"prospects":[],"priceBook":[],"customForms":[]}</script><script id="appScript">
 (function(){
 "use strict";
 
@@ -568,7 +568,7 @@ var DEFAULT_DATA = {
   },
   leads:[], units:[], installs:[], finance:[], employees:[], timeLogs:[], mileageLogs:[], marketing:[], letters:[],
   estimates:[], invoices:[], jobs:[], agreements:[], permits:[], packets:[], checkouts:[],
-  truckStock:[], truckTransfers:[], prospects:[], priceBook:[],
+  truckStock:[], truckTransfers:[], prospects:[], priceBook:[], customForms:[],
   meta:{ nextSeq:1 }
 };
 
@@ -590,7 +590,7 @@ function mergeDefaults(parsed){
   for(var k in base){ if(parsed[k]===undefined) parsed[k]=base[k]; }
   for(var ck in base.company){ if(!parsed.company || parsed.company[ck]===undefined){ parsed.company = parsed.company||{}; parsed.company[ck]=base.company[ck]; } }
   if(!parsed.meta) parsed.meta = {nextSeq:1};
-  ['estimates','invoices','jobs','agreements','permits','packets','checkouts','truckStock','truckTransfers','prospects','priceBook'].forEach(function(k){ if(!Array.isArray(parsed[k])) parsed[k]=[]; });
+  ['estimates','invoices','jobs','agreements','permits','packets','checkouts','truckStock','truckTransfers','prospects','priceBook','customForms'].forEach(function(k){ if(!Array.isArray(parsed[k])) parsed[k]=[]; });
   var bigSystemTypes = ['Central Split','Package Unit','Ductless Mini-Split','Furnace/Air Handler'];
   (parsed.units||[]).forEach(function(u){
     if(u.tier==='A'||u.tier==='B'||u.tier==='C') return;
@@ -4119,6 +4119,43 @@ function openSettings(){
 /* =========================================================
    16c. ADMIN PAGE (owner/office only)
    ========================================================= */
+function formTemplateRowsHtml(){
+  var keys = Object.keys(AHJ_FORMS).concat(customJurisdictionKeys()).sort();
+  if(!keys.length) return '<div class="empty-state">No jurisdictions on file yet.</div>';
+  var rows = keys.map(function(key){
+    var ahj = AHJ_FORMS[key];
+    var county = ahj ? ahj.county : ((DATA.customForms||[]).filter(function(f){return f.jurisdiction===key;})[0]||{}).county;
+    var custom = (DATA.customForms||[]).filter(function(f){ return f.jurisdiction===key; });
+    var sourceHtml = custom.length
+      ? custom.map(function(f){ return '<span class="chip chip-warning">Custom: '+escapeHtml(f.title||f.fileName)+' <span data-del-form="'+f.id+'" style="cursor:pointer;margin-left:4px">&times;</span></span>'; }).join(' ')
+      : '<span class="today-sub">'+((ahj&&ahj.files?ahj.files.length:0))+' built-in form'+((ahj&&ahj.files&&ahj.files.length===1)?'':'s')+'</span>';
+    return '<tr><td><b>'+escapeHtml(key)+'</b></td><td>'+escapeHtml(county==='broward'?'Broward':'Palm Beach')+'</td>'+
+      '<td>'+sourceHtml+'</td>'+
+      '<td class="row-actions"><button class="btn btn-sm" data-upload-form="'+escapeHtml(key)+'" data-county="'+escapeHtml(county||'pbc')+'">Upload / replace</button></td></tr>';
+  }).join('');
+  return '<table><thead><tr><th>Jurisdiction</th><th>County</th><th>Forms in packet</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+}
+function openFormTemplateUpload(jurisdiction, county){
+  var isNew = !jurisdiction;
+  var body = '<div class="field"><label>County</label><select id="ftCounty"><option value="pbc"'+(county==='pbc'?' selected':'')+'>Palm Beach</option><option value="broward"'+(county==='broward'?' selected':'')+'>Broward</option></select></div>'+
+    '<div class="field"><label>Jurisdiction (city, or county name for unincorporated)</label><input type="text" id="ftJurisdiction" value="'+escapeHtml(jurisdiction||'')+'"'+(isNew?'':' readonly')+'></div>'+
+    '<div class="field"><label>Title (shown in the admin list)</label><input type="text" id="ftTitle" placeholder="e.g. Mechanical Permit Application"></div>'+
+    '<div class="field"><label>PDF file</label><input type="file" id="ftFile" accept="application/pdf"></div>'+
+    '<div class="field-hint">Replaces what prints in the permit packet for this jurisdiction. The built-in forms shipped with the app stay as a fallback for every other jurisdiction.</div>';
+  openModal(isNew? 'Add jurisdiction form' : 'Upload / replace — '+jurisdiction, body, '<button class="btn" id="ftCancel">Cancel</button><button class="btn btn-primary" id="ftSave">Save</button>');
+  document.getElementById('ftCancel').addEventListener('click', closeModal);
+  document.getElementById('ftSave').addEventListener('click', function(){
+    var jur = document.getElementById('ftJurisdiction').value.trim();
+    var cty = document.getElementById('ftCounty').value;
+    var title = document.getElementById('ftTitle').value.trim();
+    var file = document.getElementById('ftFile').files[0];
+    if(!jur){ toast('Jurisdiction name is required'); return; }
+    if(!file){ toast('Choose a PDF file'); return; }
+    saveCustomFormTemplate(file, cty, jur, title).then(function(){
+      persist(); closeModal(); render(); toast('Form saved for '+jur);
+    }).catch(function(err){ toast(err.message||'Upload failed'); });
+  });
+}
 function renderAdmin(){
   var emps = DATA.employees;
   var withPin = emps.filter(function(e){ return e.pin && String(e.pin).length; }).length;
@@ -4160,6 +4197,12 @@ function renderAdmin(){
         DATA.priceBook.map(function(p){ return '<tr data-open-price="'+p.id+'"><td><b>'+escapeHtml(p.name)+'</b></td><td>'+escapeHtml(p.category||'')+'</td><td class="num">'+fmtMoney(p.price)+(p.unit&&p.unit!=='Flat'?' / '+escapeHtml(p.unit.toLowerCase()):'')+'</td></tr>'; }).join('')+
         '</tbody></table>' : '<div class="empty-state">No price book items yet. Add your common repairs, tune-ups, and parts so quoting is a tap instead of a guess.</div>')+'</div>'+
       '<div class="card-body" style="border-top:1px solid var(--border)"><button class="btn" id="adminAddPrice">+ Add price book item</button></div>'+
+    '</div>'+
+
+    '<div class="card" style="margin-bottom:20px">'+
+      '<div class="card-head"><h2>Permit Form Templates</h2><span class="hint">Palm Beach &amp; Broward jurisdiction forms used in the permit packet — replace or add without a code update</span></div>'+
+      '<div class="table-wrap">'+formTemplateRowsHtml()+'</div>'+
+      '<div class="card-body" style="border-top:1px solid var(--border)"><button class="btn" id="adminAddFormTemplate">+ Add / replace a jurisdiction form</button></div>'+
     '</div>'+
 
     '<div class="card" style="margin-bottom:20px">'+
@@ -4365,6 +4408,9 @@ function wireRouteEvents(){
   var adminBak = document.getElementById('adminOpenBackup'); if(adminBak) adminBak.addEventListener('click', openBackupModal);
   var adminAddPrice = document.getElementById('adminAddPrice'); if(adminAddPrice) adminAddPrice.addEventListener('click', function(){ openPriceItemForm(null); });
   c.querySelectorAll('[data-open-price]').forEach(function(el){ el.addEventListener('click', function(){ var p=DATA.priceBook.filter(function(x){return x.id===el.getAttribute('data-open-price');})[0]; if(p) openPriceItemForm(p); }); });
+  var adminAddForm = document.getElementById('adminAddFormTemplate'); if(adminAddForm) adminAddForm.addEventListener('click', function(){ openFormTemplateUpload('', 'pbc'); });
+  c.querySelectorAll('[data-upload-form]').forEach(function(el){ el.addEventListener('click', function(){ openFormTemplateUpload(el.getAttribute('data-upload-form'), el.getAttribute('data-county')); }); });
+  c.querySelectorAll('[data-del-form]').forEach(function(el){ el.addEventListener('click', function(e){ e.stopPropagation(); if(confirm('Remove this custom form? The jurisdiction falls back to the built-in form(s) if any exist.')){ deleteCustomFormTemplate(el.getAttribute('data-del-form')).then(function(){ persist(); render(); }); } }); });
 
   // Maps
   c.querySelectorAll('[data-map-lead]').forEach(function(el){ el.addEventListener('click', function(){ var l=DATA.leads.filter(function(x){return x.id===el.getAttribute('data-map-lead');})[0]; if(l) openMapsFor(recAddress(l), primaryName(l)); }); });
@@ -4443,12 +4489,26 @@ var AHJ_FORMS = {
   'Pompano Beach': {county:'broward', files:['PompanoBeach-ac-changeout-checklist.pdf','PompanoBeach-owner-builder-affidavit.pdf','Broward-mechanical-permit-app.pdf']},
   'Tamarac': {county:'broward', files:['Tamarac-permit-and-affidavit.pdf','Broward-mechanical-permit-app.pdf']}
 };
+/** Jurisdiction names covered only by an admin-uploaded custom form, not
+ * built into AHJ_FORMS — e.g. a city outside Palm Beach/Broward, or a new
+ * incorporation. Checked before the built-in regex fallbacks so a custom
+ * jurisdiction wins over guessing at the nearest built-in match. */
+function customJurisdictionKeys(){
+  var seen = {}; var out = [];
+  (DATA.customForms||[]).forEach(function(f){
+    if(!f.jurisdiction || AHJ_FORMS[f.jurisdiction] || seen[f.jurisdiction]) return;
+    seen[f.jurisdiction] = true; out.push(f.jurisdiction);
+  });
+  return out;
+}
 function resolveAhjKey(jur){
   jur = String(jur||'').trim();
   if(AHJ_FORMS[jur]) return jur;
   var keys = Object.keys(AHJ_FORMS);
   var low = jur.toLowerCase();
   for(var i=0;i<keys.length;i++){ if(keys[i].toLowerCase()===low) return keys[i]; }
+  var customKeys = customJurisdictionKeys();
+  for(var j=0;j<customKeys.length;j++){ if(customKeys[j].toLowerCase()===low) return customKeys[j]; }
   if(/wellington/i.test(jur)) return 'Wellington';
   if(/boca/i.test(jur)) return 'Boca Raton';
   if(/boynton/i.test(jur)) return 'Boynton Beach';
@@ -4468,7 +4528,24 @@ function resolveAhjKey(jur){
   if(/broward/i.test(jur)) return 'Broward County (unincorporated)';
   return 'Palm Beach County (unincorporated)';
 }
-function resolveAhj(jur){ return AHJ_FORMS[resolveAhjKey(jur)] || AHJ_FORMS['Palm Beach County (unincorporated)']; }
+function resolveAhj(jur){
+  var key = resolveAhjKey(jur);
+  if(AHJ_FORMS[key]) return AHJ_FORMS[key];
+  var customMatch = (DATA.customForms||[]).filter(function(f){ return f.jurisdiction===key; })[0];
+  if(customMatch) return {county: customMatch.county, files: []};
+  return AHJ_FORMS['Palm Beach County (unincorporated)'];
+}
+/** Custom (admin-uploaded) form templates override the AHJ_FORMS built-in
+ * filenames for a jurisdiction; when none exist, falls back to the
+ * built-ins. Each entry is {custom:boolean, name, attId?} — custom entries
+ * fetch bytes from IndexedDB (getPermitAttachment), built-ins fetch from
+ * the forms/ folder shipped with the app. */
+function effectiveAhjFiles(jurKey){
+  var custom = (DATA.customForms||[]).filter(function(f){ return f.jurisdiction===jurKey; });
+  if(custom.length) return custom.map(function(f){ return {custom:true, name:f.title||f.fileName, attId:f.attId}; });
+  var ahj = AHJ_FORMS[jurKey];
+  return (ahj && ahj.files ? ahj.files : []).map(function(fn){ return {custom:false, name:fn}; });
+}
 function renderDispatch(){
   rollAgreements();
   if(!state.dispTab) state.dispTab = isTech() ? 'board' : 'map';
@@ -4679,7 +4756,7 @@ function openPermitActions(p){
       '<button class="btn btn-sm" id="pktLoad" style="margin-top:6px">Edit heat load</button> '+
       '<button class="btn btn-sm" id="pktEng" style="margin-top:6px">Print engineer order</button></div>'+
     '<div style="margin-top:14px"><b>3. Spec sheets / NOAs / AHRI</b>'+specList+
-      '<div class="field" style="margin-top:8px"><label>Kind</label><select id="attKind"><option value="spec">Product spec sheet</option><option value="ahri">AHRI certificate</option><option value="noa">NOA / product approval</option><option value="photo">Photo</option><option value="other">Other</option></select></div>'+
+      '<div class="field" style="margin-top:8px"><label>Kind</label><select id="attKind"><option value="spec">Product spec sheet</option><option value="ahri">AHRI certificate</option><option value="photo">Photo</option><option value="other">Other</option></select></div>'+
       '<input type="file" id="attFile" accept="application/pdf,image/*" multiple>'+
     '</div>'+
     '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">'+
@@ -4836,6 +4913,41 @@ function deletePermitAttachment(p, id){
     });
   });
 }
+/** Admin-managed jurisdiction form templates — same IndexedDB store as job
+ * attachments (kind:'form_template' distinguishes them), referenced from
+ * DATA.customForms so the metadata travels with the JSON backup while the
+ * PDF bytes stay local, same pattern as job attachments. */
+function saveCustomFormTemplate(file, county, jurisdiction, title){
+  if(file.size > 8*1024*1024) return Promise.reject(new Error('Keep each file under 8 MB'));
+  return file.arrayBuffer().then(function(buf){
+    var rec = {id: uid('form'), kind:'form_template', name:file.name, type:file.type||'application/pdf', bytes:buf};
+    return attDb().then(function(db){
+      return new Promise(function(resolve, reject){
+        var tx = db.transaction('files','readwrite');
+        tx.objectStore('files').put(rec);
+        tx.oncomplete = function(){
+          DATA.customForms = DATA.customForms || [];
+          DATA.customForms.push({id: uid('cf'), county: county, jurisdiction: jurisdiction, title: title||file.name, fileName: file.name, attId: rec.id});
+          resolve(rec);
+        };
+        tx.onerror = function(){ reject(tx.error); };
+      });
+    });
+  });
+}
+function deleteCustomFormTemplate(id){
+  var entry = (DATA.customForms||[]).filter(function(f){ return f.id===id; })[0];
+  DATA.customForms = (DATA.customForms||[]).filter(function(f){ return f.id!==id; });
+  if(!entry) return Promise.resolve();
+  return attDb().then(function(db){
+    return new Promise(function(resolve){
+      var tx = db.transaction('files','readwrite');
+      tx.objectStore('files').delete(entry.attId);
+      tx.oncomplete = function(){ resolve(); };
+      tx.onerror = function(){ resolve(); };
+    });
+  });
+}
 function likeForLikeVerdict(lc, inst){
   inst = inst||{};
   var existing = lc.existingTon!=='' && lc.existingTon!=null ? Number(lc.existingTon) : (inst.oldTons?Number(inst.oldTons):null);
@@ -4977,7 +5089,7 @@ function openAppraiserLookup(p, inst){
   var broward = isBrowardAhj(p.jurisdiction);
   var q0 = p.address || inst.address || p.folio || '';
   var body = '<div class="helpbox">'+(broward
-    ? 'Broward BCPA does not publish owner fields for one-click fill. Search BCPA, then paste owner / folio / legal here. Contractor block still auto-fills your company info on the PDF.'
+    ? 'Broward parcels load from the county GIS layer. Pick a match to write owner, folio, address, and legal onto this job, then the Broward application PDF.'
     : 'Palm Beach parcels load from the county GIS layer. Pick a match to write owner, folio, address, and legal onto this job, then the PBC application PDF.')+
     '</div><div class="field"><label>Address or folio</label><input id="paQuery" value="'+escapeHtml(q0)+'"></div>'+
     '<div id="paResults" class="field-hint">Enter an address and Search.</div>';
@@ -4990,14 +5102,10 @@ function openAppraiserLookup(p, inst){
   document.getElementById('paSearch').onclick=function(){
     var q = document.getElementById('paQuery').value.trim();
     if(!q){ toast('Enter an address or folio'); return; }
-    if(broward){
-      document.getElementById('paResults').innerHTML = '<p>Open BCPA, copy the owner and folio, then use Edit record. Folio-only search is not published on their GIS layer.</p>';
-      window.open('https://web.bcpa.net/bcpaclient/#/Record-Search', '_blank');
-      return;
-    }
-    document.getElementById('paResults').textContent = 'Searching Palm Beach parcels…';
-    lookupPbcParcel(q).then(function(rows){
-      if(!rows.length){ document.getElementById('paResults').textContent = 'No parcel match. Try a shorter street number + name.'; return; }
+    document.getElementById('paResults').textContent = 'Searching '+(broward?'Broward':'Palm Beach')+' parcels…';
+    var lookup = broward ? lookupBrowardParcel(q) : lookupPbcParcel(q);
+    lookup.then(function(rows){
+      if(!rows.length){ document.getElementById('paResults').textContent = 'No parcel match. Try a shorter street number + name, or use the official site.'; return; }
       document.getElementById('paResults').innerHTML = rows.map(function(r,i){
         return '<div class="stop-row" style="cursor:pointer" data-paidx="'+i+'"><div class="today-main"><div class="today-title">'+escapeHtml(r.owner)+'</div><div class="today-sub">'+escapeHtml(r.address)+' · '+escapeHtml(r.city)+' · '+escapeHtml(r.folio)+'</div></div></div>';
       }).join('');
@@ -5010,7 +5118,7 @@ function openAppraiserLookup(p, inst){
           p.folio = r.folio;
           p.legal = r.legal;
           persist();
-          toast('Job filled from PBC parcel '+r.folio);
+          toast('Job filled from '+(broward?'Broward':'PBC')+' parcel '+r.folio);
           closeModal();
         };
       });
@@ -5040,6 +5148,48 @@ function lookupPbcParcel(q){
         address: a.SITE_ADDR_STR || a.PADDR1 || '',
         city: a.MUNICIPALITY || a.CITYNAME || '',
         legal: [a.LEGAL1,a.LEGAL2,a.LEGAL3].filter(Boolean).join(' ')
+      };
+    });
+  });
+}
+/** Broward's parcel-boundary layer gives city only as a tax-authority
+ * millage code, not a name — map it to the actual city the same way
+ * permitaio's own parcel lookup does. */
+var BROWARD_MILLAGE_TO_CITY = {
+  '0012':'Unincorporated Broward County','0013':'Unincorporated Broward County',
+  '0211':'Lauderdale-By-The-Sea','0311':'Fort Lauderdale','0312':'Fort Lauderdale',
+  '0412':'Dania Beach','0413':'Dania Beach','0512':'Hollywood','0513':'Hollywood',
+  '0613':'Pembroke Park','0912':'Wilton Manors','1013':'Cooper City',
+  '1111':'Deerfield Beach','1112':'Deerfield Beach','1212':'Margate',
+  '1311':'Hillsboro Beach','1411':'Lighthouse Point','1511':'Pompano Beach','1512':'Pompano Beach',
+  '1611':'Sea Ranch Lakes','1712':'Oakland Park','1812':'Lazy Lake','1912':'Lauderhill',
+  '2012':'Lauderdale Lakes','2112':'Sunrise','2212':'Plantation','2412':'Davie','2413':'Davie',
+  '2513':'Hallandale Beach','2613':'Pembroke Pines','2713':'Miramar','2812':'Coral Springs',
+  '2912':'North Lauderdale','3012':'Parkland','3112':'Tamarac','3212':'Coconut Creek',
+  '3312':'Weston','3313':'Weston','3413':'Southwest Ranches','3513':'West Park','9312':'Fort Lauderdale'
+};
+function cityFromBrowardMillage(code){
+  var digits = String(code||'').replace(/\D/g,'').slice(0,4);
+  return digits.length===4 ? (BROWARD_MILLAGE_TO_CITY[digits]||null) : null;
+}
+function lookupBrowardParcel(q){
+  var raw = (q||'').trim();
+  var safe = raw.replace(/'/g,"''").toUpperCase();
+  var where = "UPPER(PARCELNO) LIKE '%"+safe+"%' OR UPPER(OWN_NAME) LIKE '%"+safe+"%' OR UPPER(PHY_ADDR1) LIKE '%"+safe+"%'";
+  var url = 'https://services5.arcgis.com/wI5GZmCtnUU8ueya/arcgis/rest/services/Broward_County_Parcel_Boundary/FeatureServer/1/query'
+    + '?where='+encodeURIComponent(where)
+    + '&outFields=PARCELNO,OWN_NAME,PHY_ADDR1,PHY_CITY,PHY_ZIPCD,TAX_AUTH_CD,S_LEGAL'
+    + '&returnGeometry=false&f=json&resultRecordCount=8';
+  return fetch(url).then(function(r){ return r.json(); }).then(function(js){
+    return (js.features||[]).map(function(f){
+      var a = f.attributes||{};
+      var millage = String(a.TAX_AUTH_CD||'').replace(/\D/g,'').slice(0,4);
+      return {
+        folio: String(a.PARCELNO||''),
+        owner: a.OWN_NAME || '',
+        address: a.PHY_ADDR1 || '',
+        city: cityFromBrowardMillage(millage) || a.PHY_CITY || '',
+        legal: a.S_LEGAL || ''
       };
     });
   });
@@ -5215,18 +5365,25 @@ async function addCoverPage(outPdf, ctx, jur){
 }
 async function buildCityPacketPdf(p, inst){
   var ctx = packetContext(p, inst);
+  var jurKey = resolveAhjKey(p.jurisdiction);
   var ahj = resolveAhj(p.jurisdiction);
   var out = await PDFLib.PDFDocument.create();
   await addCoverPage(out, ctx, p.jurisdiction||'');
-  var files = ahj.files || [];
+  var files = effectiveAhjFiles(jurKey);
   for(var i=0;i<files.length;i++){
-    var fn = files[i];
-    var path = formsDir()+ahj.county+'/'+fn;
+    var f = files[i];
     try{
-      var res = await fetch(path);
-      if(!res.ok) continue;
-      var buf = await res.arrayBuffer();
-      var filled = await fillKnownOrGeneric(buf, fn, ctx);
+      var buf;
+      if(f.custom){
+        var rec = await getPermitAttachment(f.attId);
+        if(!rec || !rec.bytes) continue;
+        buf = rec.bytes;
+      } else {
+        var res = await fetch(formsDir()+ahj.county+'/'+f.name);
+        if(!res.ok) continue;
+        buf = await res.arrayBuffer();
+      }
+      var filled = await fillKnownOrGeneric(buf, f.custom ? '' : f.name, ctx);
       var src = await PDFLib.PDFDocument.load(filled, {ignoreEncryption:true});
       var pages = await out.copyPages(src, src.getPageIndices());
       pages.forEach(function(pg){ out.addPage(pg); });
