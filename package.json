@@ -1,0 +1,17 @@
+{
+  "name": "acpermitaio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PermitAIO Air — field + office Shop OS for AC/HVAC contractors, attached at permitaio.com/ac.",
+  "scripts": {
+    "test": "for f in test/*.js; do node \"$f\" || exit 1; done"
+  },
+  "devDependencies": {
+    "playwright": "^1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/padavanoangelique-rgb/ACpermitAIO.git"
+  },
+  "license": "ISC"
+}
