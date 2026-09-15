@@ -2149,17 +2149,41 @@ function installFields(){
     {key:'zip', label:'ZIP', type:'text', half:true},
     {key:'jobType', label:'Job Type', type:'select', options:['Changeout — like for like','Changeout — not like for like','New system','Mini-split','Service only'], half:true},
     {key:'oldBrand', label:'Existing Brand', type:'text', half:true},
-    {key:'oldModel', label:'Existing Model', type:'text', half:true},
-    {key:'oldSerial', label:'Existing Serial', type:'text', half:true},
+    {key:'oldModel', label:'Existing Condensing Unit Model', type:'text', half:true},
+    {key:'oldSerial', label:'Existing Condensing Unit Serial', type:'text', half:true},
     {key:'oldTons', label:'Existing Tons', type:'text', half:true},
+    {key:'oldRefrigerant', label:'Existing Refrigerant', type:'select', options:['R-410A','R-22','R-454B','R-32','Other'], half:true, hint:'Older systems may still be R-22 — matters for the permit packet.'},
+    {key:'oldAhModel', label:'Existing Air Handler Model', type:'text', half:true},
+    {key:'oldAhVolt', label:'Existing Air Handler Voltage', type:'text', half:true},
+    {key:'oldHeatStripKw', label:'Existing Heat Strip (KW)', type:'text', half:true},
+    {key:'oldHeatStripAmp', label:'Existing Heat Strip Amperage', type:'text', half:true},
+    {key:'oldMca', label:'Existing Min. Circuit Ampacity', type:'text', half:true},
+    {key:'oldBreakerMin', label:'Existing Breaker/Fuse Min', type:'text', half:true},
+    {key:'oldBreakerMax', label:'Existing Breaker/Fuse Max', type:'text', half:true},
+    {key:'oldWireGauge', label:'Existing Wire Size (AWG)', type:'text', half:true},
     {key:'newTons', label:'New Tons', type:'text', half:true},
-    {key:'seer', label:'SEER2 / EER', type:'text', half:true},
-    {key:'refrigerant', label:'Refrigerant', type:'text', half:true},
+    {key:'seer', label:'SEER2', type:'text', half:true},
+    {key:'eer', label:'EER', type:'text', half:true},
+    {key:'refrigerant', label:'Refrigerant', type:'select', options:['R-410A','R-454B','R-32','Other'], half:true},
     {key:'ahri', label:'AHRI #', type:'text', half:true},
     {key:'folio', label:'Folio / Parcel', type:'text', half:true},
     {key:'brand', label:'New Brand', type:'text', half:true},
-    {key:'model', label:'New Model #', type:'text', half:true},
-    {key:'serial', label:'New Serial #', type:'text', half:true},
+    {key:'model', label:'New Condensing Unit Model #', type:'text', half:true},
+    {key:'serial', label:'New Condensing Unit Serial #', type:'text', half:true},
+    {key:'cuVolt', label:'New Condensing Unit Voltage', type:'text', half:true},
+    {key:'cuMca', label:'New Condensing Unit Min. Circuit Ampacity', type:'text', half:true},
+    {key:'cuBreakerMin', label:'New Condensing Unit Breaker/Fuse Min', type:'text', half:true},
+    {key:'cuBreakerMax', label:'New Condensing Unit Breaker/Fuse Max', type:'text', half:true},
+    {key:'cuWireGauge', label:'New Condensing Unit Wire Size (AWG)', type:'text', half:true},
+    {key:'ahModel', label:'New Air Handler Model #', type:'text', half:true},
+    {key:'ahVolt', label:'New Air Handler Voltage', type:'text', half:true},
+    {key:'coilModel', label:'New Evaporator Coil Model #', type:'text', half:true},
+    {key:'heatStripKw', label:'New Heat Strip (KW)', type:'text', half:true},
+    {key:'heatStripAmp', label:'New Heat Strip Amperage', type:'text', half:true},
+    {key:'ahMca', label:'New Air Handler Min. Circuit Ampacity', type:'text', half:true},
+    {key:'ahBreakerMin', label:'New Air Handler Breaker/Fuse Min', type:'text', half:true},
+    {key:'ahBreakerMax', label:'New Air Handler Breaker/Fuse Max', type:'text', half:true},
+    {key:'ahWireGauge', label:'New Air Handler Wire Size (AWG)', type:'text', half:true},
     {key:'installDate', label:'Install Date', type:'date', half:true},
     {key:'warrantyExpires', label:'Warranty Expires', type:'date', half:true},
     {key:'nextServiceDue', label:'Next Service Due', type:'date', half:true},
@@ -4748,7 +4772,7 @@ function packetContext(p, inst){
   var value = inst.soldPrice || p.fee || '';
   var work = p.permitType || 'Replace existing air conditioning system in kind, same location';
   var newEq = [(inst.brand||''),(inst.model||''),(inst.newTons?inst.newTons+' ton':''),(inst.refrigerant||'')].filter(Boolean).join(' ');
-  var oldEq = [(inst.oldBrand||''),(inst.oldModel||''),(inst.oldTons?inst.oldTons+' ton':'')].filter(Boolean).join(' ');
+  var oldEq = [(inst.oldBrand||''),(inst.oldModel||''),(inst.oldTons?inst.oldTons+' ton':''),(inst.oldRefrigerant||'')].filter(Boolean).join(' ');
   return {
     owner: owner, tenant: '', ownerAddress: addr, ownerCity: city, ownerState: 'FL', ownerZip: inst.zip || co.zip || '',
     ownerPhone: phone, ownerEmail: email,
@@ -4760,17 +4784,24 @@ function packetContext(p, inst){
     license: co.license || '',
     contact: co.signer || co.qualifier || '',
     coAddress: co.address || '',
-    coSuite: '2',
-    coCity: co.city || 'Lantana',
+    coSuite: '',
+    coCity: co.city || '',
     coState: co.state || 'FL',
-    coZip: co.zip || '33462',
+    coZip: co.zip || '',
     coPhone: co.phone || '',
     coEmail: co.email || '',
     date: todayStr(),
     newBrand: inst.brand||'', newModel: inst.model||'', newTons: inst.newTons||'',
-    newSeer: inst.seer||'', newRefrig: inst.refrigerant||'', newSerial: inst.serial||'',
+    newSeer: inst.seer||'', newEer: inst.eer||'', newRefrig: inst.refrigerant||'', newSerial: inst.serial||'',
+    newAhModel: inst.ahModel||'', newAhVolt: inst.ahVolt||'', newCoilModel: inst.coilModel||'',
+    newCuVolt: inst.cuVolt||'', newCuMca: inst.cuMca||'', newCuBreakerMin: inst.cuBreakerMin||'', newCuBreakerMax: inst.cuBreakerMax||'', newCuWireGauge: inst.cuWireGauge||'',
+    newHeatStripKw: inst.heatStripKw||'', newHeatStripAmp: inst.heatStripAmp||'',
+    newAhMca: inst.ahMca||'', newAhBreakerMin: inst.ahBreakerMin||'', newAhBreakerMax: inst.ahBreakerMax||'', newAhWireGauge: inst.ahWireGauge||'',
     oldBrand: inst.oldBrand||'', oldModel: inst.oldModel||'', oldTons: inst.oldTons||'',
-    oldSerial: inst.oldSerial||'', ahri: inst.ahri||'',
+    oldSerial: inst.oldSerial||'', oldRefrig: inst.oldRefrigerant||'', ahri: inst.ahri||'',
+    oldAhModel: inst.oldAhModel||'', oldAhVolt: inst.oldAhVolt||'',
+    oldHeatStripKw: inst.oldHeatStripKw||'', oldHeatStripAmp: inst.oldHeatStripAmp||'',
+    oldMca: inst.oldMca||'', oldBreakerMin: inst.oldBreakerMin||'', oldBreakerMax: inst.oldBreakerMax||'', oldWireGauge: inst.oldWireGauge||'',
     newEq: newEq, oldEq: oldEq
   };
 }
@@ -5295,7 +5326,26 @@ async function addLoadCalcPage(outPdf, p, ctx){
    ['Existing vs proposed', (r.existingTon||'—')+' ton  →  '+(r.newTon||ctx.newEq||r.tonsNominal||'—')+' ton']
   ].forEach(function(row){ w.line(row[0]+':  '+row[1], 10); });
   w.gap(10);
-  w.line('B. ENGINEER ORDER — send this page if the determination is not like-for-like', 11, bold);
+  w.line('B. EQUIPMENT SPECIFICATION', 11, bold);
+  w.line('Replacement', 9, bold);
+  [['Brand / model / serial', [ctx.newBrand,ctx.newModel,ctx.newSerial].filter(Boolean).join(' / ')||'—'],
+   ['Refrigerant / SEER2 / EER', [ctx.newRefrig,ctx.newSeer&&('SEER2 '+ctx.newSeer),ctx.newEer&&('EER '+ctx.newEer)].filter(Boolean).join(' · ')||'—'],
+   ['Air handler', [ctx.newAhModel,ctx.newAhVolt].filter(Boolean).join(' · ')||'—'],
+   ['Evaporator coil model', ctx.newCoilModel||'—'],
+   ['Heat strip KW / amperage', [ctx.newHeatStripKw&&(ctx.newHeatStripKw+' KW'),ctx.newHeatStripAmp&&(ctx.newHeatStripAmp+' A')].filter(Boolean).join(' / ')||'—'],
+   ['Condensing unit MCA / breaker / wire', [ctx.newCuMca,(ctx.newCuBreakerMin||ctx.newCuBreakerMax)&&(ctx.newCuBreakerMin+'–'+ctx.newCuBreakerMax),ctx.newCuWireGauge&&(ctx.newCuWireGauge+' AWG')].filter(Boolean).join(' / ')||'—'],
+   ['Air handler MCA / breaker / wire', [ctx.newAhMca,(ctx.newAhBreakerMin||ctx.newAhBreakerMax)&&(ctx.newAhBreakerMin+'–'+ctx.newAhBreakerMax),ctx.newAhWireGauge&&(ctx.newAhWireGauge+' AWG')].filter(Boolean).join(' / ')||'—']
+  ].forEach(function(row){ w.line(row[0]+':  '+row[1], 9); });
+  w.gap(4);
+  w.line('Existing', 9, bold);
+  [['Brand / model / serial', [ctx.oldBrand,ctx.oldModel,ctx.oldSerial].filter(Boolean).join(' / ')||'—'],
+   ['Refrigerant', ctx.oldRefrig||'—'],
+   ['Air handler', [ctx.oldAhModel,ctx.oldAhVolt].filter(Boolean).join(' · ')||'—'],
+   ['Heat strip KW / amperage', [ctx.oldHeatStripKw&&(ctx.oldHeatStripKw+' KW'),ctx.oldHeatStripAmp&&(ctx.oldHeatStripAmp+' A')].filter(Boolean).join(' / ')||'—'],
+   ['MCA / breaker / wire', [ctx.oldMca,(ctx.oldBreakerMin||ctx.oldBreakerMax)&&(ctx.oldBreakerMin+'–'+ctx.oldBreakerMax),ctx.oldWireGauge&&(ctx.oldWireGauge+' AWG')].filter(Boolean).join(' / ')||'—']
+  ].forEach(function(row){ w.line(row[0]+':  '+row[1], 9); });
+  w.gap(10);
+  w.line('C. ENGINEER ORDER — send this page if the determination is not like-for-like', 11, bold);
   w.line('Please provide ACCA Manual J (and Manual S / D if ducts or tonnage change). Return PDF to '+(ctx.coEmail||'the shop')+'.', 9);
   w.line('Vendor: '+(r.engineerName||'________________')+'   Email: '+(r.engineerEmail||'________________'), 10);
   w.line('Existing equipment: '+(r.existingBrand||'')+'  '+(r.existingTon||'')+' ton', 10);
