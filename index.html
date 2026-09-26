@@ -1332,6 +1332,7 @@ var ICONS = {
   agreements:'<path d="M6 3.4h5.2L16 8.2v8.4H6z"/><path d="M11.2 3.4V8H16"/><path d="M8 11.2h6M8 13.8h4"/>',
   permits:'<path d="M5 3.6h7.2L16 7.4v9H5z"/><path d="M12 3.6V7.4h4"/><path d="M7.2 11.2h6.2M7.2 13.8h4"/>',
   jobs:'<path d="M5 3.6h7.2L16 7.4v9H5z"/><path d="M12 3.6V7.4h4"/><path d="M7.2 11.2h6.2M7.2 13.8h4"/>',
+  permitbuilder:'<path d="M5 3.6h7.2L16 7.4v9H5z"/><path d="M12 3.6V7.4h4"/><path d="M7.2 11.2h6.2M7.2 13.8h4"/>',
   admin:'<circle cx="10" cy="10" r="3"/><path d="M10 3.2v1.6M10 15.2v1.6M16.8 10h-1.6M4.8 10H3.2M14.8 5.2l-1.1 1.1M6.3 13.7l-1.1 1.1M14.8 14.8l-1.1-1.1M6.3 6.3 5.2 5.2"/>'
 };
 function icon(name,size){ size=size||18; return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+ICONS[name]+'</svg>'; }
@@ -1346,6 +1347,7 @@ var NAV = [
   {id:'dispatch', label:'Dispatch & Routes'},
   {id:'installs', label:'Installs, Warranty & Agreements'},
   {id:'jobs', label:'Jobs (Q- / J-)'},
+  {id:'permitbuilder', label:'Permit Builder'},
   {id:'inventory', label:'Inventory'},
   {id:'letters', label:'Letters'},
   {id:'team', label:'Team'},
@@ -1358,6 +1360,7 @@ var SUBS = {
   dispatch:'Tech, day, time window — plus stops, the map, and GPS clock in/out',
   installs:'Sold units, service, warranty & recurring agreements',
   jobs:'Q-# quote until sold, then J-# — packet, sale, install on one number',
+  permitbuilder:'Every permit job — jurisdiction forms, heat load, spec/NOA uploads, and status to close-out',
   inventory:'Units, parts, barcode checkout onto job cost', letters:'Mail-ready letters & log',
   team:'Hours, mileage & PINs', marketing:'Content calendar',
   admin:'Company settings, team access & backups — owner/office only'
@@ -1406,7 +1409,7 @@ function render(){
   document.getElementById('pageTitle').textContent = navHit? navHit.label : 'Dashboard';
   document.getElementById('pageSub').textContent = SUBS[state.route]||'';
   var c = document.getElementById('content');
-  var fn = { dashboard:(isTech()?renderTechHome:renderDashboard), leads:renderLeads, estimates:renderEstimates, dispatch:renderDispatch, installs:renderInstalls, permits:renderJobs, jobs:renderJobs, inventory:renderInventory, letters:renderLetters, team:renderTeam, marketing:renderMarketing, admin:renderAdmin }[state.route];
+  var fn = { dashboard:(isTech()?renderTechHome:renderDashboard), leads:renderLeads, estimates:renderEstimates, dispatch:renderDispatch, installs:renderInstalls, permits:renderJobs, jobs:renderJobs, permitbuilder:renderPermitBuilder, inventory:renderInventory, letters:renderLetters, team:renderTeam, marketing:renderMarketing, admin:renderAdmin }[state.route];
   c.innerHTML = fn ? fn() : '';
   document.body.classList.toggle('tech-phone', isTech());
   document.body.classList.toggle('office-phone', !isTech() && window.matchMedia && window.matchMedia('(max-width:880px)').matches);
@@ -1738,7 +1741,7 @@ function renderDashboard(){
     stat('Active Installs','Units in the field', activeInstalls, null, 'installs') +
     stat('Open Invoices','Unpaid / partial', DATA.invoices.filter(function(i){return i.status==='Sent'||i.status==='Partial';}).length, DATA.invoices.some(function(i){return i.status==='Sent'||i.status==='Partial';})?'warning':null, 'estimates') +
     stat('Jobs Today','Dispatch board', DATA.jobs.filter(function(j){return j.date===todayStr() && j.status!=='Canceled';}).length, null, 'dispatch') +
-    stat('Open Permits','Not closed', DATA.permits.filter(function(p){return p.status!=='Closed' && p.status!=='Passed';}).length, null, 'permits') +
+    stat('Open Permits','Not closed', DATA.permits.filter(function(p){return p.status!=='Closed' && p.status!=='Passed';}).length, null, 'permitbuilder') +
     stat('Team Hours (wk)','This work week', weekHoursTotal().toFixed(1), null, 'team') +
     stat('Callbacks (30d)','Return visits · quality check', DATA.jobs.filter(function(j){ return j.isCallback && j.date && daysBetween(j.date, todayStr())!==null && daysBetween(j.date, todayStr())<=30 && daysBetween(j.date,todayStr())>=0; }).length, null, 'dispatch');
 
@@ -4721,6 +4724,57 @@ function renderJobs(){
       : '<div class="empty-state"><div class="big">No jobs yet</div>Approve an estimate or add a job. The number minted there is the source of truth.</div>')+'</div></div>';
 }
 function renderPermits(){ return renderJobs(); }
+/* Dedicated Permit Builder workspace: every DATA.permits record in one list,
+   independent of drilling into a job first. Reuses openPermitActions() (the
+   real packet workflow — city forms, heat load, spec/NOA uploads) and
+   openPermitForm() untouched; this is only a new lens over the same data. */
+function renderPermitBuilder(){
+  var tab = state.permitFilter||'open';
+  var all = (DATA.permits||[]).slice().sort(function(a,b){ return String(a.jobNo).localeCompare(String(b.jobNo), undefined, {numeric:true}); });
+  var openCount = all.filter(function(p){ return p.status!=='Closed' && p.status!=='Passed'; }).length;
+  var readyCount = all.filter(function(p){ return p.status==='Packet Ready'; }).length;
+  var noLoadCount = all.filter(function(p){ return p.status!=='Closed' && p.status!=='Passed' && !(p.loadCalc&&p.loadCalc.floorArea); }).length;
+  var rows = all.filter(function(p){
+    if(tab==='all') return true;
+    if(tab==='open') return p.status!=='Closed' && p.status!=='Passed';
+    if(tab==='ready') return p.status==='Packet Ready';
+    if(tab==='submitted') return p.status==='Submitted' || p.status==='Inspection Scheduled';
+    if(tab==='closed') return p.status==='Closed' || p.status==='Passed';
+    return true;
+  });
+  var tone = function(s){
+    if(s==='Passed'||s==='Closed'||s==='Issued') return 'success';
+    if(s==='Failed') return 'critical';
+    if(s==='Submitted'||s==='Inspection Scheduled') return 'b2b';
+    if(s==='Packet Ready') return 'warning';
+    return 'neutral';
+  };
+  var body = rows.map(function(p){
+    var inst = p.installId ? DATA.installs.filter(function(i){ return i.id===p.installId; })[0] : null;
+    var lc = p.loadCalc||{};
+    return '<tr data-open-permit="'+p.id+'">'+
+      '<td>'+chipJob(p.jobNo)+'</td>'+
+      '<td>'+escapeHtml(p.customerName||(inst&&inst.customerName)||'—')+'<div class="today-sub">'+escapeHtml([p.address,p.city].filter(Boolean).join(', ')||'—')+'</div></td>'+
+      '<td>'+escapeHtml(p.jurisdiction||'—')+'</td>'+
+      '<td>'+escapeHtml(p.permitType||'—')+'</td>'+
+      '<td>'+(lc.floorArea ? escapeHtml((lc.tonsNominal||'—')+' ton'+(lc.verdictOk?' · like-for-like':' · engineer order')) : '<span class="today-sub">Not calculated</span>')+'</td>'+
+      '<td><span class="chip chip-'+tone(p.status)+'">'+escapeHtml(p.status||'Draft')+'</span></td>'+
+      '<td>'+escapeHtml(p.nocStatus||'—')+'</td>'+
+    '</tr>';
+  }).join('');
+  return '<div class="helpbox"><b>Every permit job, one place.</b> Pick the jurisdiction\'s forms, fill the heat-load worksheet, attach spec sheets/AHRI/NOAs, and build one printable packet — then track it through to close-out.</div>'+
+    '<div class="grid stat-row" style="margin-bottom:14px">'+
+      stat('Open permits','Not closed', openCount, openCount?'warning':'success', 'permitbuilder')+
+      stat('Packet ready','Ready to submit', readyCount, readyCount?'success':null, 'permitbuilder')+
+      stat('Missing heat load','Open permits, no worksheet yet', noLoadCount, noLoadCount?'critical':'success', 'permitbuilder')+
+    '</div>'+
+    '<div class="toolbar"><div class="tabs">'+[['all','All'],['open','Open'],['ready','Packet ready'],['submitted','Submitted'],['closed','Closed / passed']].map(function(t){
+      return '<div class="tab'+(tab===t[0]?' active':'')+'" data-permittab="'+t[0]+'">'+t[1]+'</div>';
+    }).join('')+'</div><div class="spacer"></div><button class="btn" id="addPermitBtn">+ New permit</button></div>'+
+    '<div class="card"><div class="table-wrap">'+(rows.length
+      ? '<table><thead><tr><th>Job #</th><th>Customer</th><th>Jurisdiction</th><th>Permit type</th><th>Heat load</th><th>Status</th><th>NOC</th></tr></thead><tbody>'+body+'</tbody></table>'
+      : '<div class="empty-state"><div class="big">No permits in this view</div>New permit jobs are created automatically from a sold install\'s "Permit packet" button, or add one directly here.</div>')+'</div></div>';
+}
 function openPermitForm(existing){
   var instOpts=[{value:'',label:'— link a sold unit —'}].concat(DATA.installs.map(function(i){return {value:i.id,label:i.customerName+' · '+(i.brand||'')+' '+(i.model||'')};}));
   openFormModal({title:existing?'Permit record':'New permit job', wide:true,
