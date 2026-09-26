@@ -491,7 +491,103 @@
     .stop-acts .btn, .stop-acts a.btn{ min-height:52px; font-size:15px; }
   }
 
-</style></head><body><div id="appShell">
+</style></head><body>
+<div id="authGate" style="position:fixed;inset:0;z-index:99999;background:var(--bg,#f4f7fb);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',system-ui,sans-serif;">
+  <div style="max-width:360px;width:calc(100% - 40px);background:var(--surface,#fff);border:1px solid var(--border,#d5dee8);border-radius:14px;padding:28px;box-shadow:var(--shadow,0 8px 24px -12px rgba(0,0,0,.2));">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+      <span style="width:34px;height:34px;border-radius:9px;background:var(--accent,#1D4FD8);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">A</span>
+      <strong style="font-size:15px;">PermitAIO <span style="color:var(--gold,#22D3EE);">Air</span></strong>
+    </div>
+    <div id="authGateStatus" style="font-size:13px;color:var(--text-muted,#434343);margin-bottom:14px;">Checking your session…</div>
+    <form id="authGateForm" style="display:none;flex-direction:column;gap:10px;">
+      <input id="authGateEmail" type="email" autocomplete="username" placeholder="Email" required style="padding:10px 12px;border:1px solid var(--border,#d5dee8);border-radius:8px;font-size:14px;">
+      <input id="authGatePassword" type="password" autocomplete="current-password" placeholder="Password" required style="padding:10px 12px;border:1px solid var(--border,#d5dee8);border-radius:8px;font-size:14px;">
+      <button type="submit" style="padding:10px 12px;border:none;border-radius:8px;background:var(--accent,#1D4FD8);color:#fff;font-weight:600;font-size:14px;cursor:pointer;">Sign in</button>
+      <div id="authGateError" style="color:var(--critical,#c23b3b);font-size:12.5px;display:none;"></div>
+    </form>
+    <div id="authGateBlocked" style="display:none;font-size:13px;color:var(--text-muted,#434343);">
+      <p style="margin:0 0 12px;">Your account is signed in, but this workspace isn't set up for PermitAIO Air.</p>
+      <a href="https://permitaio.com/dashboard" style="color:var(--accent,#1D4FD8);font-weight:600;">Go to your PermitAIO dashboard →</a>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+(function(){
+  // Same Supabase project as the rest of PermitAIO (permitaio.com) — copy
+  // the exact NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY
+  // values from that Vercel project's env vars here before deploying.
+  // Intentionally left as placeholders rather than fetched automatically.
+  var SUPABASE_URL = "REPLACE_WITH_NEXT_PUBLIC_SUPABASE_URL";
+  var SUPABASE_ANON_KEY = "REPLACE_WITH_NEXT_PUBLIC_SUPABASE_ANON_KEY";
+
+  var gate = document.getElementById("authGate");
+  var statusEl = document.getElementById("authGateStatus");
+  var form = document.getElementById("authGateForm");
+  var blocked = document.getElementById("authGateBlocked");
+  var errEl = document.getElementById("authGateError");
+
+  if (!window.supabase || !window.supabase.createClient) {
+    statusEl.textContent = "Could not load the sign-in service. Check your connection and reload.";
+    return;
+  }
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  function show(el){ [form, blocked].forEach(function(e){ e.style.display = "none"; }); if (el) el.style.display = el === form ? "flex" : "block"; }
+
+  async function hasAirAccess(userId){
+    try {
+      var admin = await sb.from("platform_admins").select("user_id").eq("user_id", userId).maybeSingle();
+      if (admin.data) return true;
+    } catch (e) { /* table read denied by RLS just means "not an admin" */ }
+
+    var memberships = await sb
+      .from("organization_members")
+      .select("organizations(product)")
+      .eq("user_id", userId);
+    return (memberships.data || []).some(function(row){
+      return row.organizations && row.organizations.product === "air";
+    });
+  }
+
+  async function evaluate(){
+    statusEl.textContent = "Checking your session…";
+    show(null);
+    var { data } = await sb.auth.getSession();
+    var session = data && data.session;
+    if (!session) {
+      statusEl.textContent = "Sign in with your PermitAIO account.";
+      show(form);
+      return;
+    }
+    var ok = await hasAirAccess(session.user.id);
+    if (!ok) {
+      statusEl.textContent = "Signed in as " + session.user.email;
+      show(blocked);
+      return;
+    }
+    gate.style.display = "none";
+  }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    errEl.style.display = "none";
+    var email = document.getElementById("authGateEmail").value.trim();
+    var password = document.getElementById("authGatePassword").value;
+    sb.auth.signInWithPassword({ email: email, password: password }).then(function(res){
+      if (res.error) {
+        errEl.textContent = "Incorrect email or password.";
+        errEl.style.display = "block";
+        return;
+      }
+      evaluate();
+    });
+  });
+
+  evaluate();
+})();
+</script>
+<div id="appShell">
   <aside id="sidebar">
     <div class="brand">
       <img class="brand-logo" alt="PermitAIO Air" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMUQ0RkQ4Ii8+PGcgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PGxpbmUgeDE9IjUwIiB5MT0iMjAiIHgyPSI1MCIgeTI9IjgwIi8+PGxpbmUgeDE9IjI0IiB5MT0iMzUiIHgyPSI3NiIgeTI9IjY1Ii8+PGxpbmUgeDE9Ijc2IiB5MT0iMzUiIHgyPSIyNCIgeTI9IjY1Ii8+PC9nPjxnIGZpbGw9IiMyMkQzRUUiPjxjaXJjbGUgY3g9IjUwIiBjeT0iMjAiIHI9IjUiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjgwIiByPSI1Ii8+PGNpcmNsZSBjeD0iMjQiIGN5PSIzNSIgcj0iNSIvPjxjaXJjbGUgY3g9Ijc2IiBjeT0iNjUiIHI9IjUiLz48Y2lyY2xlIGN4PSI3NiIgY3k9IjM1IiByPSI1Ii8+PGNpcmNsZSBjeD0iMjQiIGN5PSI2NSIgcj0iNSIvPjwvZz48L3N2Zz4K">
